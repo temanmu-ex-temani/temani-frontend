@@ -65,7 +65,6 @@ class SharedPreferencesService {
 
   static Future<void> removeCreds() async {
     await removeKey(PreferencesKeys.token);
-    await removeKey(PreferencesKeys.email);
     await removeKey(PreferencesKeys.displayName);
     await removeKey(PreferencesKeys.userId);
   }
