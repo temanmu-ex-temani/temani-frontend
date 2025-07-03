@@ -63,14 +63,10 @@ class TemaniButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(PhosphorIcons.caretLeft(), color: textColor),
-            SizedBox(width: 8),
             Text(
               "Button",
               style: FontTheme.textRegular.copyWith(color: textColor),
             ),
-            SizedBox(width: 8),
-            Icon(PhosphorIcons.caretRight(), color: textColor),
           ],
         ),
       ),

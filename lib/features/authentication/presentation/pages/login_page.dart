@@ -5,6 +5,7 @@ import 'package:temani_frontend/services/shared_preference_service.dart';
 import 'package:temani_frontend/services/jwt_service.dart';
 import 'package:temani_frontend/app.dart';
 import 'dart:convert';
+import 'package:temani_frontend/core/constants/_constants.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -40,9 +41,21 @@ class _LoginPageState extends State<LoginPage> {
         try {
           final dynamic raw = response.data;
           final data = raw is String ? json.decode(raw) : raw;
-          final token = data['data'];
+          final token = data['data']['token'];
+          final userId = data['data']['userId'];
+          final username = data['data']['username'];
           await SharedPreferencesService.saveToken(token);
+          await SharedPreferencesService.saveString(
+            PreferencesKeys.userId,
+            userId,
+          );
+          await SharedPreferencesService.saveString(
+            PreferencesKeys.displayName,
+            username,
+          );
           print("tokennya : " + token);
+          print("userId : " + userId);
+          print("username : " + username);
           if (!mounted) return;
           router.go('/main');
         } catch (e) {

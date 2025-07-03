@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
+import 'package:temani_frontend/core/constants/_constants.dart';
 import 'package:temani_frontend/services/shared_preference_service.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:temani_frontend/core/client/_client.dart';
+import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {
   final String sessionId;
@@ -26,6 +30,8 @@ class _ChatPageState extends State<ChatPage> {
   String? username;
   String? token;
   bool connected = false;
+  bool _loadingHistory = false;
+  String? _historyError;
 
   @override
   void initState() {
@@ -35,10 +41,51 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<void> _initChat() async {
     token = SharedPreferencesService.getToken();
-    username = "dummy_penyandang";
+    username = SharedPreferencesService.getString(PreferencesKeys.displayName);
     print('[ChatPage] Token: ' + (token ?? 'null'));
     print('[ChatPage] Username: ' + (username ?? 'null'));
+    setState(() {
+      _loadingHistory = true;
+      _historyError = null;
+    });
+    await _fetchChatHistory();
+    setState(() {
+      _loadingHistory = false;
+    });
     _connectWebSocket();
+  }
+
+  Future<void> _fetchChatHistory() async {
+    final url =
+        'http://10.0.2.2:8080/chat-messages/session/${widget.sessionId}';
+    try {
+      final response = await getIt(
+        url,
+        headers: {'Authorization': 'Bearer $token'},
+      );
+      print('[ChatPage] Fetching chat history: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final List<dynamic> data =
+            response.data is String
+                ? json.decode(response.data)
+                : response.data;
+        setState(() {
+          messages = data.cast<Map<String, dynamic>>();
+          _historyError = null;
+        });
+        _scrollToBottom();
+      } else {
+        print('[ChatPage] Failed to fetch chat history: ${response.data}');
+        setState(() {
+          _historyError = 'Failed to fetch chat history.';
+        });
+      }
+    } catch (e) {
+      print('[ChatPage] Error fetching chat history: $e');
+      setState(() {
+        _historyError = 'Error fetching chat history.';
+      });
+    }
   }
 
   void _connectWebSocket() {
@@ -154,124 +201,175 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                final msg = messages[index];
-                final isMe = msg['senderUsername'] == username;
-                return Align(
-                  alignment:
-                      isMe ? Alignment.centerRight : Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      mainAxisAlignment:
-                          isMe
-                              ? MainAxisAlignment.end
-                              : MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        if (!isMe)
-                          CircleAvatar(
-                            radius: 16,
-                            backgroundColor: Color(0xFFD6E6FB),
-                            child: Text(
-                              (msg['senderUsername'] ?? 'C')
-                                  .substring(0, 1)
-                                  .toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        if (!isMe) SizedBox(width: 8),
-                        Flexible(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 10,
-                              horizontal: 14,
-                            ),
-                            decoration: BoxDecoration(
-                              color: isMe ? null : Colors.white,
-
-                              gradient:
+      body:
+          _loadingHistory
+              ? Center(child: CircularProgressIndicator())
+              : _historyError != null
+              ? Center(
+                child: Text(
+                  _historyError!,
+                  style: TextStyle(color: Colors.red),
+                ),
+              )
+              : Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 8,
+                      ),
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        final msg = messages[index];
+                        final isMe = msg['senderUsername'] == username;
+                        String time = '';
+                        if (msg['timestamp'] != null) {
+                          try {
+                            final dt = DateTime.parse(msg['timestamp']);
+                            time = DateFormat('HH.mm').format(dt);
+                          } catch (_) {}
+                        }
+                        return Align(
+                          alignment:
+                              isMe
+                                  ? Alignment.centerRight
+                                  : Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: Row(
+                              mainAxisAlignment:
                                   isMe
-                                      ? LinearGradient(
-                                        colors: [
-                                          Color(0xFF6EC6F7),
-                                          Color(0xFF8ECFFF),
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                      )
-                                      : null,
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
+                                      ? MainAxisAlignment.end
+                                      : MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
                                 if (!isMe)
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.03),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
+                                  CircleAvatar(
+                                    radius: 16,
+                                    backgroundColor: Color(0xFFD6E6FB),
+                                    child: Text(
+                                      (msg['senderUsername'] ?? 'C')
+                                          .substring(0, 1)
+                                          .toUpperCase(),
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
+                                if (!isMe) SizedBox(width: 8),
+                                if (isMe && time.isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 4),
+                                    child: Text(
+                                      time,
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                Flexible(
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 10,
+                                      horizontal: 14,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: isMe ? null : Colors.white,
+                                      gradient:
+                                          isMe
+                                              ? LinearGradient(
+                                                colors: [
+                                                  Color(0xFF6EC6F7),
+                                                  Color(0xFF8ECFFF),
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              )
+                                              : null,
+                                      borderRadius: BorderRadius.circular(16),
+                                      boxShadow: [
+                                        if (!isMe)
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(
+                                              0.03,
+                                            ),
+                                            blurRadius: 4,
+                                            offset: Offset(0, 2),
+                                          ),
+                                      ],
+                                    ),
+                                    child: Text(
+                                      msg['content'] ?? '',
+                                      style: TextStyle(
+                                        color:
+                                            isMe
+                                                ? Colors.white
+                                                : Colors.black87,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                if (!isMe && time.isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: Text(
+                                      time,
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                if (isMe) SizedBox(width: 8),
                               ],
                             ),
-                            child: Text(
-                              msg['content'] ?? '',
-                              style: TextStyle(
-                                color: isMe ? Colors.white : Colors.black87,
-                                fontSize: 16,
-                              ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(24),
+                              border: Border.all(color: Color(0xFFE0E0E0)),
                             ),
+                            child: TextField(
+                              controller: _controller,
+                              decoration: InputDecoration(
+                                hintText: 'Masukkan teks Anda',
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                              ),
+                              onSubmitted: (_) => _sendMessage(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        GestureDetector(
+                          onTap: _sendMessage,
+                          child: CircleAvatar(
+                            backgroundColor: Color(0xFF6EC6F7),
+                            child: Icon(Icons.send, color: Colors.white),
                           ),
                         ),
                       ],
                     ),
                   ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(24),
-                      border: Border.all(color: Color(0xFFE0E0E0)),
-                    ),
-                    child: TextField(
-                      controller: _controller,
-                      decoration: InputDecoration(
-                        hintText: 'Masukkan teks Anda',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                      ),
-                      onSubmitted: (_) => _sendMessage(),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 8),
-                GestureDetector(
-                  onTap: _sendMessage,
-                  child: CircleAvatar(
-                    backgroundColor: Color(0xFF6EC6F7),
-                    child: Icon(Icons.send, color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+                ],
+              ),
     );
   }
 }

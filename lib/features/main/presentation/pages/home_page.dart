@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
+import 'package:temani_frontend/core/constants/_constants.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
 import 'package:temani_frontend/features/main/presentation/widgets/affirmation_card.dart';
 import 'package:temani_frontend/features/main/presentation/widgets/home_header.dart';
@@ -10,12 +11,17 @@ import 'package:temani_frontend/features/main/presentation/widgets/daily_task_se
 import 'package:temani_frontend/features/main/presentation/widgets/navigation_section.dart';
 import 'package:temani_frontend/features/main/presentation/widgets/upcoming_counseling_section.dart';
 import 'package:temani_frontend/features/main/presentation/widgets/emergency_call_section.dart';
+import 'package:temani_frontend/services/shared_preference_service.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final username = SharedPreferencesService.getString(
+      PreferencesKeys.displayName,
+    );
+
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -37,7 +43,7 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
             child: Column(
               children: [
-                HomeHeader(),
+                HomeHeader(username: username ?? 'User'),
                 SizedBox(height: 16),
                 AffirmationCard(text: 'Kamu lebih dari yang kamu kira! '),
                 SizedBox(height: 16),

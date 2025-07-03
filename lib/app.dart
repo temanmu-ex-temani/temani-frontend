@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:temani_frontend/features/counseling/presentation/pages/chat_page.dart';
+import 'package:temani_frontend/features/counseling/presentation/pages/counseling_page.dart';
 import 'services/router_service.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temani_frontend/features/main/presentation/pages/home_page.dart';
@@ -41,7 +42,7 @@ class _MainScaffoldState extends State<MainScaffold> {
         style: TextStyle(fontSize: 24, color: Colors.grey),
       ),
     ),
-    ChatPage(),
+    CounselingPage(),
     Center(
       child: Text('Profil', style: TextStyle(fontSize: 24, color: Colors.grey)),
     ),

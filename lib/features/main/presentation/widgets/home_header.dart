@@ -3,7 +3,8 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+  const HomeHeader({required this.username, super.key});
+  final String username;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class HomeHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Halo,', style: FontTheme.textRegular),
-            Text('Lorem Ipsum', style: FontTheme.textBold),
+            Text(username, style: FontTheme.textBold),
           ],
         ),
         Container(
