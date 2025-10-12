@@ -16,10 +16,16 @@ import 'package:injectable/injectable.dart' as _i526;
 import '../../core/di/dio_provider.dart' as _i448;
 import '../../features/counseling/data/datasources/counseling_schedule_remote_datasource.dart'
     as _i499;
+import '../../features/counseling/data/datasources/payment_remote_datasource.dart'
+    as _i485;
 import '../../features/counseling/data/repositories/counseling_schedule_repository_impl.dart'
     as _i797;
+import '../../features/counseling/data/repositories/payment_repository_impl.dart'
+    as _i191;
 import '../../features/counseling/domain/repositories/counseling_schedule_repository.dart'
     as _i201;
+import '../../features/counseling/domain/repositories/payment_repository.dart'
+    as _i573;
 import '../../features/counseling/presentation/cubit/book_consultation_cubit.dart'
     as _i82;
 
@@ -34,6 +40,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i361.Dio>(() => dioProvider.dio);
     gh.factory<_i499.CounselingScheduleRemoteDataSource>(
       () => _i499.CounselingScheduleRemoteDataSourceImpl(dio: gh<_i361.Dio>()),
+    );
+    gh.factory<_i485.PaymentRemoteDataSource>(
+      () => _i485.PaymentRemoteDataSourceImpl(dio: gh<_i361.Dio>()),
+    );
+    gh.factory<_i573.PaymentRepository>(
+      () => _i191.PaymentRepositoryImpl(
+        remoteDataSource: gh<_i485.PaymentRemoteDataSource>(),
+      ),
     );
     gh.factory<_i201.CounselingScheduleRepository>(
       () => _i797.CounselingScheduleRepositoryImpl(

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class PaymentPayButton extends StatelessWidget {
   final bool enabled;
   final VoidCallback onPressed;
+  final bool isLoading;
   const PaymentPayButton({
     super.key,
     required this.enabled,
     required this.onPressed,
+    this.isLoading = false,
   });
 
   @override
@@ -39,14 +41,24 @@ class PaymentPayButton extends StatelessWidget {
             ),
             elevation: 0,
           ),
-          child: const Text(
-            'Bayar',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
+          child:
+              isLoading
+                  ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                  : const Text(
+                    'Bayar',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
         ),
       ),
     );

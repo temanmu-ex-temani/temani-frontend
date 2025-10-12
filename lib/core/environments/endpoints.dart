@@ -7,4 +7,8 @@ class EndPoints {
   // Counseling Endpoints
   static const String counselingSchedulesAvailable =
       '$baseUrl/counseling-schedules/available';
+
+  // Payment Endpoints
+  static const String paymentCreate = '$baseUrl/payments/create';
+  static const String paymentStatus = '$baseUrl/payments/status';
 }
