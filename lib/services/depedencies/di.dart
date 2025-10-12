@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'di.config.dart';
@@ -10,8 +9,9 @@ final GetIt get = GetIt.I;
   preferRelativeImports: true,
   asExtension: true,
 )
-
 void configureDependencies() {
   get.init();
-  get.registerSingleton<Dio>(Dio());
+
+  // Register Dio as singleton (Injectable will handle this automatically)
+  // The @injectable classes will now work properly
 }

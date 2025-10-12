@@ -48,7 +48,7 @@ class FontTheme {
 
   static TextStyle bodyRegular = GoogleFonts.poppins(
     color: _color,
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: FontWeight.w400,
     height: _height,
   );

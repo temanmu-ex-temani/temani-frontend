@@ -13,7 +13,7 @@ class ChatPage extends StatefulWidget {
   final String counselorName;
   const ChatPage({
     super.key,
-    this.sessionId = "1233",
+    this.sessionId = "1234",
     this.receiverUsername = "dummy_peer",
     this.counselorName = "dummy_peer",
   });

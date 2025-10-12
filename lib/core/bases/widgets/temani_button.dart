@@ -3,9 +3,15 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
 
 class TemaniButton extends StatelessWidget {
-  const TemaniButton({required this.type, super.key});
+  const TemaniButton({
+    required this.type,
+    required this.text,
+    this.onPressed,
+    super.key,
+  });
   final int type;
-
+  final String text;
+  final VoidCallback? onPressed;
   @override
   Widget build(BuildContext context) {
     Color? bgColor;
@@ -15,7 +21,7 @@ class TemaniButton extends StatelessWidget {
     double? borderWidth;
     switch (type) {
       case 0:
-        bgColor = BaseColors.secondary.shade400;
+        bgColor = BaseColors.secondary;
         textColor = BaseColors.white;
         break;
       case 1:
@@ -37,37 +43,40 @@ class TemaniButton extends StatelessWidget {
         bgColor = BaseColors.secondary;
         textColor = BaseColors.white;
     }
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(16),
-        border:
-            borderOn
-                ? Border.all(
-                  color: borderColor ?? BaseColors.borderMedium,
-                  width: borderWidth ?? 1.0,
-                )
-                : null,
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(16),
+          border:
+              borderOn
+                  ? Border.all(
+                    color: borderColor ?? BaseColors.borderMedium,
+                    width: borderWidth ?? 1.0,
+                  )
+                  : null,
 
-        gradient:
-            type == 3
-                ? const LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [Color(0xFF51A2FF), Color(0xFF00D3F3)],
-                )
-                : null,
-      ),
-      child: IntrinsicWidth(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Button",
-              style: FontTheme.textRegular.copyWith(color: textColor),
-            ),
-          ],
+          gradient:
+              type == 3
+                  ? const LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [Color(0xFF51A2FF), Color(0xFF00D3F3)],
+                  )
+                  : null,
+        ),
+        child: IntrinsicWidth(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                text,
+                style: FontTheme.textSemiBold.copyWith(color: textColor),
+              ),
+            ],
+          ),
         ),
       ),
     );

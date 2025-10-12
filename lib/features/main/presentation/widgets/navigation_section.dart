@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:temani_frontend/services/router_service.dart';
 
 class NavigationSection extends StatelessWidget {
   const NavigationSection({super.key});
@@ -10,20 +11,26 @@ class NavigationSection extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _NavCard(
-            title: 'Tulis jurnal harian',
-            icon: PhosphorIcons.bookOpen(),
-            iconColor: BaseColors.orange.shade500,
-            bgColor: BaseColors.orange.shade100,
+          child: InkWell(
+            onTap: () => router.push('/journal'),
+            child: _NavCard(
+              title: 'Tulis jurnal harian',
+              icon: PhosphorIcons.bookOpen(),
+              iconColor: BaseColors.orange.shade500,
+              bgColor: BaseColors.orange.shade100,
+            ),
           ),
         ),
         SizedBox(width: 16),
         Expanded(
-          child: _NavCard(
-            title: 'Buat jadwal konseling',
-            icon: PhosphorIcons.calendarBlank(),
-            iconColor: BaseColors.info.shade500,
-            bgColor: BaseColors.info.shade100,
+          child: InkWell(
+            onTap: () => router.push('/book-consultation'),
+            child: _NavCard(
+              title: 'Buat jadwal konseling',
+              icon: PhosphorIcons.calendarBlank(),
+              iconColor: BaseColors.info.shade500,
+              bgColor: BaseColors.info.shade100,
+            ),
           ),
         ),
       ],

@@ -3,14 +3,28 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
 
 class MoodButton extends StatelessWidget {
-  const MoodButton({required this.scale, super.key});
   final int scale;
+  final bool selected;
+  final bool dimmed;
+  final VoidCallback? onTap;
+  const MoodButton({
+    required this.scale,
+    this.selected = false,
+    this.dimmed = false,
+    this.onTap,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     IconData icon;
     Color color;
     String text;
+    Color borderColor;
+    Color iconColor;
+    Color textColor;
+    Color bgColor;
+    Color grey = BaseColors.neutral.shade300;
 
     switch (scale) {
       case 1:
@@ -43,25 +57,48 @@ class MoodButton extends StatelessWidget {
         color = BaseColors.rose.shade400;
         text = 'Sangat Buruk';
     }
-    return Container(
-      padding: EdgeInsets.all(6),
-      width: 76,
-      height: 76,
-      decoration: BoxDecoration(
-        border: Border.all(color: BaseColors.borderMedium),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(icon, color: color),
-          Text(
-            text,
-            style: FontTheme.captionRegular,
-            textAlign: TextAlign.center,
-          ),
-        ],
+
+    if (selected) {
+      borderColor = color;
+      iconColor = color;
+      textColor = color;
+      bgColor = color.withOpacity(0.12);
+    } else if (dimmed) {
+      borderColor = grey;
+      iconColor = grey;
+      textColor = grey;
+      bgColor = Colors.transparent;
+    } else {
+      borderColor = color;
+      iconColor = color;
+      textColor = color;
+      bgColor = Colors.transparent;
+    }
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(6),
+        width: 76,
+        height: 90,
+        decoration: BoxDecoration(
+          color: bgColor,
+          border: Border.all(color: borderColor),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(icon, color: iconColor),
+            const SizedBox(height: 4),
+            Text(
+              text,
+              style: FontTheme.captionRegular.copyWith(color: textColor),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

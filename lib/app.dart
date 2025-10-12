@@ -5,6 +5,7 @@ import 'package:temani_frontend/features/counseling/presentation/pages/counselin
 import 'services/router_service.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temani_frontend/features/main/presentation/pages/home_page.dart';
+import 'package:temani_frontend/features/activity/presentation/pages/activity_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -36,12 +37,7 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   final List<Widget> _pages = [
     HomePage(),
-    Center(
-      child: Text(
-        'Aktivitas',
-        style: TextStyle(fontSize: 24, color: Colors.grey),
-      ),
-    ),
+    ActivityPage(),
     CounselingPage(),
     Center(
       child: Text('Profil', style: TextStyle(fontSize: 24, color: Colors.grey)),

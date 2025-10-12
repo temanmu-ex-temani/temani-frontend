@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
+import 'package:temani_frontend/services/router_service.dart';
 
 class Task {
   String title;
@@ -47,7 +48,7 @@ class _DailyTaskSectionState extends State<DailyTaskSection> {
             children: [
               Text('Tugasmu hari ini', style: FontTheme.textMedium),
               GestureDetector(
-                onTap: () {},
+                onTap: () => router.push('/todo'),
                 child: Text(
                   'Lihat lainnya',
                   style: FontTheme.captionRegular.copyWith(
