@@ -25,6 +25,22 @@ class CounselingScheduleRepositoryImpl implements CounselingScheduleRepository {
     );
   }
 
+  @override
+  Future<Either<Failure, List<CounselingSchedule>>> getCounselingSchedules({
+    List<String>? status,
+  }) async {
+    final result = await remoteDataSource.getCounselingSchedules(
+      status: status,
+    );
+
+    return result.fold(
+      (failure) => Left(failure),
+      (response) => Right(
+        response.data.map((model) => _mapModelToEntity(model)).toList(),
+      ),
+    );
+  }
+
   CounselingSchedule _mapModelToEntity(CounselingScheduleModel model) {
     return CounselingSchedule(
       id: model.id,

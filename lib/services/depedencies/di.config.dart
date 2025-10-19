@@ -28,6 +28,8 @@ import '../../features/counseling/domain/repositories/payment_repository.dart'
     as _i573;
 import '../../features/counseling/presentation/cubit/book_consultation_cubit.dart'
     as _i82;
+import '../../features/counseling/presentation/cubit/counseling_sessions_cubit.dart'
+    as _i186;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -56,6 +58,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i82.BookConsultationCubit>(
       () => _i82.BookConsultationCubit(
+        repository: gh<_i201.CounselingScheduleRepository>(),
+      ),
+    );
+    gh.factory<_i186.CounselingSessionsCubit>(
+      () => _i186.CounselingSessionsCubit(
         repository: gh<_i201.CounselingScheduleRepository>(),
       ),
     );

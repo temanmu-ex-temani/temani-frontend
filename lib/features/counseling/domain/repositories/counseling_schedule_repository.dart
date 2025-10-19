@@ -4,4 +4,7 @@ import 'package:temani_frontend/features/counseling/domain/entities/counseling_s
 
 abstract class CounselingScheduleRepository {
   Future<Either<Failure, List<CounselingSchedule>>> getAvailableSchedules();
+  Future<Either<Failure, List<CounselingSchedule>>> getCounselingSchedules({
+    List<String>? status,
+  });
 }

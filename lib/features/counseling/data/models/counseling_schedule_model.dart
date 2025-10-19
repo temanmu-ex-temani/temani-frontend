@@ -109,3 +109,33 @@ class AvailableSchedulesResponse {
     );
   }
 }
+
+class CounselingSchedulesResponse {
+  final int status;
+  final String message;
+  final String timestamp;
+  final List<CounselingScheduleModel> data;
+
+  CounselingSchedulesResponse({
+    required this.status,
+    required this.message,
+    required this.timestamp,
+    required this.data,
+  });
+
+  factory CounselingSchedulesResponse.fromJson(Map<String, dynamic> json) {
+    return CounselingSchedulesResponse(
+      status: json['status'] as int,
+      message: json['message'] as String,
+      timestamp: json['timestamp'] as String,
+      data:
+          (json['data'] as List)
+              .map(
+                (item) => CounselingScheduleModel.fromJson(
+                  item as Map<String, dynamic>,
+                ),
+              )
+              .toList(),
+    );
+  }
+}

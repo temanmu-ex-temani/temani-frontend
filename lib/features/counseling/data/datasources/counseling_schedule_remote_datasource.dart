@@ -8,6 +8,9 @@ import 'package:temani_frontend/features/counseling/data/models/counseling_sched
 
 abstract class CounselingScheduleRemoteDataSource {
   Future<Either<Failure, AvailableSchedulesResponse>> getAvailableSchedules();
+  Future<Either<Failure, CounselingSchedulesResponse>> getCounselingSchedules({
+    List<String>? status,
+  });
 }
 
 @Injectable(as: CounselingScheduleRemoteDataSource)
@@ -24,6 +27,29 @@ class CounselingScheduleRemoteDataSourceImpl
       getIt<Map<String, dynamic>>(
         EndPoints.counselingSchedulesAvailable,
       ).then((response) => AvailableSchedulesResponse.fromJson(response.data!)),
+    );
+  }
+
+  @override
+  Future<Either<Failure, CounselingSchedulesResponse>> getCounselingSchedules({
+    List<String>? status,
+  }) async {
+    final queryParameters = <String, dynamic>{};
+
+    if (status != null && status.isNotEmpty) {
+      // Add multiple status parameters
+      for (int i = 0; i < status.length; i++) {
+        queryParameters['status'] = status[i];
+      }
+    }
+
+    print('queryParameters: $queryParameters');
+    return await apiCall<CounselingSchedulesResponse>(
+      getIt<Map<String, dynamic>>(
+        '${EndPoints.counselingSchedules}?status=PENDING&status=SCHEDULED&status=ONGOING&status=COMPLETED&status=CANCELLED',
+      ).then(
+        (response) => CounselingSchedulesResponse.fromJson(response.data!),
+      ),
     );
   }
 }

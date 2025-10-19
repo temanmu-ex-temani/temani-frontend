@@ -27,6 +27,7 @@ class UpcomingCounselingSection extends StatelessWidget {
           Text('Sesi konseling mendatang', style: FontTheme.textMedium),
           SizedBox(height: 12),
           CounselingSessionCard(
+            id: 'sample-id',
             name: 'Chika',
             date: 'Rabu, 2 Juli 2025',
             time: '19:00 - 20:00',

@@ -6,6 +6,7 @@ import 'package:temani_frontend/features/counseling/presentation/widgets/counsel
 import 'package:temani_frontend/services/router_service.dart';
 
 class CounselingSessionCard extends StatelessWidget {
+  final String id;
   final String name;
   final String date;
   final String time;
@@ -15,6 +16,7 @@ class CounselingSessionCard extends StatelessWidget {
 
   const CounselingSessionCard({
     super.key,
+    required this.id,
     required this.name,
     required this.date,
     required this.time,
@@ -82,6 +84,10 @@ class CounselingSessionCard extends StatelessWidget {
 
   Color getDetailTextColor() {
     return Color(0xFF1E40AF); // info.shade800
+  }
+
+  void _navigateToChatRoom() {
+    router.push('/chat');
   }
 
   @override
@@ -178,7 +184,7 @@ class CounselingSessionCard extends StatelessWidget {
                               ? TemaniButton(
                                 type: 3,
                                 text: 'Gabung',
-                                onPressed: () => router.push('/chat'),
+                                onPressed: () => _navigateToChatRoom(),
                               )
                               : const SizedBox.shrink(),
                     ),

@@ -2,7 +2,8 @@ import 'package:go_router/go_router.dart';
 import 'package:temani_frontend/app.dart';
 import 'package:temani_frontend/features/authentication/presentation/pages/login_page.dart';
 import 'package:temani_frontend/features/counseling/presentation/pages/book_consultation_page.dart';
-import 'package:temani_frontend/features/counseling/presentation/pages/chat_page.dart';
+import 'package:temani_frontend/features/counseling/presentation/pages/chat_page.dart'
+    as counseling_chat;
 import 'package:temani_frontend/features/counseling/presentation/pages/counseling_page.dart';
 import 'package:temani_frontend/features/counseling/presentation/pages/payment_page.dart';
 import 'package:temani_frontend/features/journal/presentation/pages/create_journal_page.dart';
@@ -34,6 +35,9 @@ GoRouter router = GoRouter(
       path: '/todo/create',
       builder: (context, state) => const CreateTodoPage(),
     ),
-    GoRoute(path: '/chat', builder: (context, state) => const ChatPage()),
+    GoRoute(
+      path: '/chat',
+      builder: (context, state) => const counseling_chat.ChatPage(),
+    ),
   ],
 );

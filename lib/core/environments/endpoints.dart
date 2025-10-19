@@ -7,6 +7,7 @@ class EndPoints {
   // Counseling Endpoints
   static const String counselingSchedulesAvailable =
       '$baseUrl/counseling-schedules/available';
+  static const String counselingSchedules = '$baseUrl/counseling-schedules';
 
   // Payment Endpoints
   static const String paymentCreate = '$baseUrl/payments/create';
