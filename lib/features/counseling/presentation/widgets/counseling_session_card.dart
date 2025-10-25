@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
+import 'package:temani_frontend/core/constants/_constants.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
 import 'package:temani_frontend/features/counseling/presentation/widgets/counseling_details_bottom_sheet.dart';
 import 'package:temani_frontend/services/router_service.dart';
+import 'package:temani_frontend/services/shared_preference_service.dart';
 
 class CounselingSessionCard extends StatelessWidget {
   final String id;
   final String name;
+  final String title;
+  final String counselorId;
+  final String counselorUsername;
+  final String? clientId;
   final String date;
   final String time;
   final String status;
@@ -18,6 +24,10 @@ class CounselingSessionCard extends StatelessWidget {
     super.key,
     required this.id,
     required this.name,
+    required this.title,
+    required this.counselorId,
+    required this.counselorUsername,
+    this.clientId,
     required this.date,
     required this.time,
     required this.status,
@@ -87,7 +97,53 @@ class CounselingSessionCard extends StatelessWidget {
   }
 
   void _navigateToChatRoom() {
-    router.push('/chat');
+    // Use the schedule ID as session ID and counselor info
+    final sessionId = id; // This is the schedule ID
+    final counselorName = name; // This is the counselor display name
+
+    // Get current user's ID
+    final currentUserId = SharedPreferencesService.getString(
+      PreferencesKeys.userId,
+    );
+
+    // Determine receiver ID based on user role
+    String receiverId;
+    if (currentUserId == counselorId) {
+      // Current user is counselor -> receiver is client
+      receiverId = clientId ?? '';
+    } else {
+      // Current user is client -> receiver is counselor
+      receiverId = counselorId;
+    }
+
+    router.push(
+      '/chat?sessionId=$sessionId&receiverId=$receiverId&counselorName=$counselorName',
+    );
+  }
+
+  void _navigateToChatHistory() {
+    // Use the schedule ID as session ID and counselor info
+    final sessionId = id; // This is the schedule ID
+    final counselorName = name; // This is the counselor display name
+
+    // Get current user's ID
+    final currentUserId = SharedPreferencesService.getString(
+      PreferencesKeys.userId,
+    );
+
+    // Determine receiver ID based on user role
+    String receiverId;
+    if (currentUserId == counselorId) {
+      // Current user is counselor -> receiver is client
+      receiverId = clientId ?? '';
+    } else {
+      // Current user is client -> receiver is counselor
+      receiverId = counselorId;
+    }
+
+    router.push(
+      '/chat-history?sessionId=$sessionId&receiverId=$receiverId&counselorName=$counselorName',
+    );
   }
 
   @override
@@ -117,13 +173,18 @@ class CounselingSessionCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    const SizedBox(width: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,
@@ -142,6 +203,22 @@ class CounselingSessionCard extends StatelessWidget {
                           fontSize: 12,
                         ),
                       ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                // Counselor name with icon
+                Row(
+                  children: [
+                    Icon(
+                      PhosphorIcons.user(),
+                      size: 16,
+                      color: Color(0xFF64748B), // textSecondary
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      name,
+                      style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
                     ),
                   ],
                 ),
@@ -176,20 +253,36 @@ class CounselingSessionCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                Row(
+                Column(
                   children: [
-                    Expanded(
-                      child:
-                          canJoin
-                              ? TemaniButton(
-                                type: 3,
-                                text: 'Gabung',
-                                onPressed: () => _navigateToChatRoom(),
-                              )
-                              : const SizedBox.shrink(),
-                    ),
-                    if (canJoin) const SizedBox(width: 12),
-                    Expanded(
+                    // Show "Gabung" button for active sessions
+                    if (canJoin)
+                      SizedBox(
+                        width: double.infinity,
+                        child: TemaniButton(
+                          type: 3,
+                          text: 'Gabung',
+                          onPressed: () => _navigateToChatRoom(),
+                        ),
+                      ),
+
+                    // Show "Konsultasi Saya" button for completed sessions
+                    if (status == 'Selesai')
+                      SizedBox(
+                        width: double.infinity,
+                        child: TemaniButton(
+                          type: 3,
+                          text: 'Konsultasi Saya',
+                          onPressed: () => _navigateToChatHistory(),
+                        ),
+                      ),
+
+                    if (canJoin || status == 'Selesai')
+                      const SizedBox(height: 8),
+
+                    // Detail button
+                    SizedBox(
+                      width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
                           showModalBottomSheet(

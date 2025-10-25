@@ -66,3 +66,62 @@ Future<Response<T>> postIt<T>(
   }
   return resp;
 }
+
+Future<Response<T>> putIt<T>(
+  String url, {
+  Map<String, String>? headers,
+  Map<String, dynamic>? model,
+  Map<String, dynamic>? queryParameters,
+}) async {
+  if (kDebugMode) {
+    LoggerService.i({
+      'url': url,
+      'headers': '${SharedPreferencesService.getHeaders()}',
+      'model': '$model',
+    });
+  }
+  final getHeaders = headers ?? SharedPreferencesService.getHeaders();
+  final resp = await get<Dio>().put<T>(
+    url,
+    data: json.encode(model),
+    options: _options.copyWith(
+      headers: getHeaders,
+    ),
+    queryParameters: queryParameters,
+  );
+  if (kDebugMode) {
+    LoggerService.i({
+      'response': '${resp.data}',
+      'statusCode': '${resp.statusCode}',
+    });
+  }
+  return resp;
+}
+
+Future<Response<T>> deleteIt<T>(
+  String url, {
+  Map<String, String>? headers,
+  Map<String, dynamic>? queryParameters,
+}) async {
+  if (kDebugMode) {
+    LoggerService.i({
+      'url': url,
+      'headers': '${SharedPreferencesService.getHeaders()}',
+    });
+  }
+  final getHeaders = headers ?? SharedPreferencesService.getHeaders();
+  final resp = await get<Dio>().delete<T>(
+    url,
+    options: _options.copyWith(
+      headers: getHeaders,
+    ),
+    queryParameters: queryParameters,
+  );
+  if (kDebugMode) {
+    LoggerService.i({
+      'response': '${resp.data}',
+      'statusCode': '${resp.statusCode}',
+    });
+  }
+  return resp;
+}

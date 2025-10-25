@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
 
 class CreateJournalTitleInput extends StatelessWidget {
-  const CreateJournalTitleInput({super.key});
+  final TextEditingController controller;
+  
+  const CreateJournalTitleInput({
+    super.key,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +23,7 @@ class CreateJournalTitleInput extends StatelessWidget {
           Text('Beri nama jurnalmu', style: FontTheme.textSemiBold),
           const SizedBox(height: 8),
           TextField(
+            controller: controller,
             decoration: InputDecoration(
               hintText: 'Judul jurnalmu ...',
               hintStyle: FontTheme.textRegular.copyWith(

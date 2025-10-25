@@ -4,11 +4,12 @@ import 'package:temani_frontend/features/authentication/presentation/pages/login
 import 'package:temani_frontend/features/counseling/presentation/pages/book_consultation_page.dart';
 import 'package:temani_frontend/features/counseling/presentation/pages/chat_page.dart'
     as counseling_chat;
+import 'package:temani_frontend/features/counseling/presentation/pages/chat_history_page.dart'
+    as counseling_chat_history;
 import 'package:temani_frontend/features/counseling/presentation/pages/counseling_page.dart';
 import 'package:temani_frontend/features/counseling/presentation/pages/payment_page.dart';
 import 'package:temani_frontend/features/journal/presentation/pages/create_journal_page.dart';
 import 'package:temani_frontend/features/journal/presentation/pages/journal_page.dart';
-import 'package:temani_frontend/features/main/presentation/pages/home_page.dart';
 import 'package:temani_frontend/features/todo/presentation/pages/create_todo_page.dart';
 import 'package:temani_frontend/features/todo/presentation/pages/todo_page.dart';
 
@@ -37,7 +38,29 @@ GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/chat',
-      builder: (context, state) => const counseling_chat.ChatPage(),
+      builder: (context, state) {
+        final sessionId = state.uri.queryParameters['sessionId'] ?? '';
+        final receiverId = state.uri.queryParameters['receiverId'] ?? '';
+        final counselorName = state.uri.queryParameters['counselorName'] ?? '';
+        return counseling_chat.ChatPage(
+          sessionId: sessionId,
+          receiverUsername: receiverId, // This is now actually receiverId
+          counselorName: counselorName,
+        );
+      },
+    ),
+    GoRoute(
+      path: '/chat-history',
+      builder: (context, state) {
+        final sessionId = state.uri.queryParameters['sessionId'] ?? '';
+        final receiverId = state.uri.queryParameters['receiverId'] ?? '';
+        final counselorName = state.uri.queryParameters['counselorName'] ?? '';
+        return counseling_chat_history.ChatHistoryPage(
+          sessionId: sessionId,
+          receiverUsername: receiverId,
+          counselorName: counselorName,
+        );
+      },
     ),
   ],
 );

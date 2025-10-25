@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/services/router_service.dart';
 
 class JournalHeader extends StatelessWidget {
-  const JournalHeader({super.key});
+  final VoidCallback? onCreateJournal;
+
+  const JournalHeader({super.key, this.onCreateJournal});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class JournalHeader extends StatelessWidget {
               child: TemaniButton(
                 type: 3,
                 text: 'Tulis jurnal',
-                onPressed: () => router.push('/journal/create'),
+                onPressed: onCreateJournal,
               ),
             ),
           ),

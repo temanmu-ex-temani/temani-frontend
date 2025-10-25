@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
 
 class CreateJournalContentInput extends StatelessWidget {
-  const CreateJournalContentInput({super.key});
+  final TextEditingController controller;
+  
+  const CreateJournalContentInput({
+    super.key,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +23,7 @@ class CreateJournalContentInput extends StatelessWidget {
           Text('Tuliskan perasaanmu', style: FontTheme.textSemiBold),
           const SizedBox(height: 8),
           TextField(
+            controller: controller,
             minLines: 10,
             maxLines: 16,
             decoration: InputDecoration(

@@ -17,6 +17,10 @@ class CounselingSessionList extends StatelessWidget {
             child: CounselingSessionCard(
               id: session.id,
               name: session.counselorName,
+              title: session.title,
+              counselorId: session.counselorId,
+              counselorUsername: session.counselorUsername,
+              clientId: session.clientId,
               date: _formatDate(session.scheduledAt),
               time: _formatTime(session.scheduledAt),
               status: _getLocalizedStatus(session.status),

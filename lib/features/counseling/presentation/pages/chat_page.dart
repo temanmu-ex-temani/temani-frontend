@@ -3,7 +3,6 @@ import 'package:stomp_dart_client/stomp_dart_client.dart';
 import 'package:temani_frontend/core/constants/_constants.dart';
 import 'package:temani_frontend/services/shared_preference_service.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:temani_frontend/core/client/_client.dart';
 import 'package:intl/intl.dart';
 
@@ -13,9 +12,9 @@ class ChatPage extends StatefulWidget {
   final String counselorName;
   const ChatPage({
     super.key,
-    this.sessionId = "1234",
-    this.receiverUsername = "dummy_peer",
-    this.counselorName = "dummy_peer",
+    required this.sessionId,
+    required this.receiverUsername,
+    required this.counselorName,
   });
 
   @override
@@ -28,6 +27,7 @@ class _ChatPageState extends State<ChatPage> {
   List<Map<String, dynamic>> messages = [];
   StompClient? stompClient;
   String? username;
+  String? userId;
   String? token;
   bool connected = false;
   bool _loadingHistory = false;
@@ -42,8 +42,10 @@ class _ChatPageState extends State<ChatPage> {
   Future<void> _initChat() async {
     token = SharedPreferencesService.getToken();
     username = SharedPreferencesService.getString(PreferencesKeys.displayName);
+    userId = SharedPreferencesService.getString(PreferencesKeys.userId);
     print('[ChatPage] Token: ' + (token ?? 'null'));
     print('[ChatPage] Username: ' + (username ?? 'null'));
+    print('[ChatPage] UserId: ' + (userId ?? 'null'));
     setState(() {
       _loadingHistory = true;
       _historyError = null;
@@ -52,6 +54,7 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {
       _loadingHistory = false;
     });
+
     _connectWebSocket();
   }
 
@@ -127,7 +130,7 @@ class _ChatPageState extends State<ChatPage> {
     print('[ChatPage] _onConnect called');
     setState(() => connected = true);
     stompClient!.subscribe(
-      destination: '/user/queue/messages',
+      destination: '/user/queue/messages/${widget.sessionId}',
       callback: (frame) {
         print('[ChatPage] Received message frame: ${frame.body}');
         if (frame.body != null) {
@@ -149,7 +152,7 @@ class _ChatPageState extends State<ChatPage> {
     if (content.isEmpty || !connected) return;
     final msg = {
       'sessionId': widget.sessionId,
-      'receiverUsername': widget.receiverUsername,
+      'receiverId': widget.receiverUsername, // Now using receiverId field
       'content': content,
     };
     print('[ChatPage] Sending message: $msg');
@@ -223,7 +226,7 @@ class _ChatPageState extends State<ChatPage> {
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
                         final msg = messages[index];
-                        final isMe = msg['senderUsername'] == username;
+                        final isMe = msg['senderId'] == userId;
                         String time = '';
                         if (msg['timestamp'] != null) {
                           try {

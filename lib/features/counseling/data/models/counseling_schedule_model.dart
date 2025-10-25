@@ -3,6 +3,7 @@ class CounselingScheduleModel {
   final String? clientId;
   final String counselorId;
   final String counselorName;
+  final String counselorUsername;
   final DateTime scheduledAt;
   final String title;
   final String description;
@@ -15,6 +16,7 @@ class CounselingScheduleModel {
     this.clientId,
     required this.counselorId,
     required this.counselorName,
+    required this.counselorUsername,
     required this.scheduledAt,
     required this.title,
     required this.description,
@@ -29,6 +31,7 @@ class CounselingScheduleModel {
       clientId: json['clientId'] as String?,
       counselorId: json['counselorId'] as String,
       counselorName: json['counselorName'] as String,
+      counselorUsername: json['counselorName'] as String,
       scheduledAt: DateTime.parse(json['scheduledAt'] as String),
       title: json['title'] as String,
       description: json['description'] as String,
@@ -44,6 +47,7 @@ class CounselingScheduleModel {
       if (clientId != null) 'clientId': clientId,
       'counselorId': counselorId,
       'counselorName': counselorName,
+      'counselorUsername': counselorUsername,
       'scheduledAt': scheduledAt.toIso8601String(),
       'title': title,
       'description': description,
@@ -58,6 +62,7 @@ class CounselingScheduleModel {
     String? clientId,
     String? counselorId,
     String? counselorName,
+    String? counselorUsername,
     DateTime? scheduledAt,
     String? title,
     String? description,
@@ -70,6 +75,7 @@ class CounselingScheduleModel {
       clientId: clientId ?? this.clientId,
       counselorId: counselorId ?? this.counselorId,
       counselorName: counselorName ?? this.counselorName,
+      counselorUsername: counselorUsername ?? this.counselorUsername,
       scheduledAt: scheduledAt ?? this.scheduledAt,
       title: title ?? this.title,
       description: description ?? this.description,

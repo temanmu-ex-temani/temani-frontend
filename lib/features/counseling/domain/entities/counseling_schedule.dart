@@ -3,6 +3,7 @@ class CounselingSchedule {
   final String? clientId;
   final String counselorId;
   final String counselorName;
+  final String counselorUsername;
   final DateTime scheduledAt;
   final String title;
   final String description;
@@ -15,6 +16,7 @@ class CounselingSchedule {
     this.clientId,
     required this.counselorId,
     required this.counselorName,
+    required this.counselorUsername,
     required this.scheduledAt,
     required this.title,
     required this.description,

@@ -47,6 +47,7 @@ class CounselingScheduleRepositoryImpl implements CounselingScheduleRepository {
       clientId: model.clientId,
       counselorId: model.counselorId,
       counselorName: model.counselorName,
+      counselorUsername: model.counselorUsername,
       scheduledAt: model.scheduledAt,
       title: model.title,
       description: model.description,
