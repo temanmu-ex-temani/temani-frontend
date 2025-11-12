@@ -5,6 +5,7 @@ import 'package:temani_frontend/features/journal/domain/entities/journal.dart';
 import 'package:temani_frontend/features/journal/presentation/cubit/journal_cubit.dart';
 import 'package:temani_frontend/features/journal/presentation/widgets/journal_edit_dialog.dart';
 import 'package:temani_frontend/services/depedencies/di.dart';
+import 'package:temani_frontend/services/toast_service.dart';
 
 class JournalDetailPage extends StatefulWidget {
   final Journal journal;
@@ -31,36 +32,18 @@ class _JournalDetailPageState extends State<JournalDetailPage> {
       child: BlocListener<JournalCubit, JournalState>(
         listener: (context, state) {
           if (state is JournalError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
-              ),
-            );
+            ToastService.show(context, state.message);
           } else if (state is JournalUpdated) {
-            // Successfully updated
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Jurnal berhasil diupdate'),
-                backgroundColor: Colors.green,
-              ),
-            );
-            // Navigate back to journal list and trigger refresh
-            Navigator.of(context).pop(true); // Pass true to indicate success
+            ToastService.show(context, 'Jurnal berhasil diperbarui');
+            Navigator.of(context).pop(true);
           } else if (state is JournalDeleted) {
-            // Successfully deleted
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Jurnal berhasil dihapus'),
-                backgroundColor: Colors.green,
-              ),
-            );
-            // Navigate back to journal list and trigger refresh
-            Navigator.of(context).pop(true); // Pass true to indicate success
+            ToastService.show(context, 'Jurnal berhasil dihapus');
+            Navigator.of(context).pop(true);
           }
         },
         child: Scaffold(
-          backgroundColor: const Color(0xFFF6FAFF),
+          extendBodyBehindAppBar: false,
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -131,12 +114,12 @@ class _JournalDetailPageState extends State<JournalDetailPage> {
                                   Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      color: Colors.blue.withOpacity(0.1),
+                                      color: BaseColors.info.shade100,
                                       borderRadius: BorderRadius.circular(8),
                                     ),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.edit_rounded,
-                                      color: Colors.blue,
+                                      color: BaseColors.info.shade600,
                                       size: 18,
                                     ),
                                   ),
@@ -189,88 +172,114 @@ class _JournalDetailPageState extends State<JournalDetailPage> {
               ),
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Date and time info
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFE3EAF2)),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: BaseColors.primary.shade100,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.calendar_today_rounded,
-                          size: 18,
-                          color: BaseColors.primary.shade600,
-                        ),
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: const Alignment(0.00, -1.00),
+                end: const Alignment(0.00, 1.00),
+                colors: [
+                  BaseColors.info.shade50,
+                  BaseColors.cyan.shade50,
+                  BaseColors.success.shade50,
+                ],
+                stops: const [0, 0.5, 1],
+                transform: GradientRotation(169 * 3.14159 / 180),
+              ),
+            ),
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFFE3EAF2)),
                       ),
-                      const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
                         children: [
-                          Text(
-                            widget.journal.formattedDate,
-                            style: FontTheme.textSemiBold.copyWith(
-                              color: BaseColors.primary.shade600,
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: BaseColors.info.shade100,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.calendar_today_rounded,
+                              size: 18,
+                              color: BaseColors.info.shade600,
                             ),
                           ),
-                          Text(
-                            widget.journal.formattedTime,
-                            style: FontTheme.captionRegular.copyWith(
-                              color: const Color(0xFF7A7A7A),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.journal.formattedDate,
+                                  style: FontTheme.textSemiBold.copyWith(
+                                    color: BaseColors.info.shade600,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.access_time,
+                                      size: 16,
+                                      color: BaseColors.info.shade500,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      widget.journal.formattedTime,
+                                      style: FontTheme.captionRegular.copyWith(
+                                        color: const Color(0xFF7A7A7A),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Title
-                Text(
-                  widget.journal.title,
-                  style: FontTheme.subHeader.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Content
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFFE3EAF2)),
                     ),
-                    child: SingleChildScrollView(
-                      child: Text(
-                        widget.journal.content,
-                        style: FontTheme.textRegular.copyWith(
-                          color: const Color(0xFF333333),
-                          height: 1.6,
+                    const SizedBox(height: 16),
+                    Text(
+                      widget.journal.title,
+                      style: FontTheme.subHeader.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: const Color(0xFFE3EAF2)),
+                        ),
+                        child: SingleChildScrollView(
+                          child: Text(
+                            widget.journal.content,
+                            style: FontTheme.textRegular.copyWith(
+                              color: const Color(0xFF333333),
+                              height: 1.6,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

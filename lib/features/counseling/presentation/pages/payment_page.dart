@@ -9,9 +9,9 @@ import 'package:temani_frontend/features/counseling/domain/repositories/payment_
 import 'package:temani_frontend/features/counseling/domain/entities/payment.dart';
 import 'package:temani_frontend/features/counseling/domain/entities/payment_request.dart';
 import 'package:temani_frontend/features/counseling/presentation/pages/midtrans_webview_page.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/payment_processing_dialog.dart';
 import 'package:temani_frontend/services/router_service.dart';
 import 'package:get_it/get_it.dart';
+import 'package:temani_frontend/services/toast_service.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -65,11 +65,9 @@ class _PaymentPageState extends State<PaymentPage> {
           setState(() {
             isLoading = false;
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Payment failed: ${failure.message}'),
-              backgroundColor: Colors.red,
-            ),
+          ToastService.show(
+            context,
+            'Pembayaran gagal: ${failure.message}',
           );
         },
         (payment) {
@@ -83,12 +81,7 @@ class _PaymentPageState extends State<PaymentPage> {
       setState(() {
         isLoading = false;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Payment error: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      ToastService.show(context, 'Terjadi kesalahan pembayaran: $e');
     }
   }
 
@@ -371,21 +364,6 @@ class _PaymentPageState extends State<PaymentPage> {
           ),
         ),
       ],
-    );
-  }
-
-  void _showPaymentProcessingDialog(Payment payment) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder:
-          (context) => PaymentProcessingDialog(
-            payment: payment,
-            onBackPressed: () {
-              Navigator.of(context).pop(); // Close dialog
-              router.go('/main'); // Navigate to main page
-            },
-          ),
     );
   }
 

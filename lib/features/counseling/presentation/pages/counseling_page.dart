@@ -6,6 +6,7 @@ import 'package:temani_frontend/features/counseling/presentation/widgets/counsel
 import 'package:temani_frontend/features/counseling/presentation/widgets/counseling_tab_bar.dart';
 import 'package:temani_frontend/features/counseling/presentation/widgets/counseling_session_list.dart';
 import 'package:temani_frontend/services/depedencies/di.dart';
+import 'package:temani_frontend/services/toast_service.dart';
 
 class CounselingPage extends StatefulWidget {
   const CounselingPage({super.key});
@@ -80,12 +81,9 @@ class _CounselingPageState extends State<CounselingPage> {
                     >(
                       listener: (context, state) {
                         if (state.status == CounselingSessionsStatus.error) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                state.errorMessage ?? 'An error occurred',
-                              ),
-                            ),
+                          ToastService.show(
+                            context,
+                            state.errorMessage ?? 'Terjadi kesalahan',
                           );
                         }
                       },

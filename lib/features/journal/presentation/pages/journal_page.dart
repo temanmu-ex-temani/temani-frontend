@@ -55,6 +55,8 @@ class _JournalPageState extends State<JournalPage> {
     return BlocProvider.value(
       value: _cubit,
       child: Scaffold(
+        extendBodyBehindAppBar: false,
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -74,20 +76,38 @@ class _JournalPageState extends State<JournalPage> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 8),
-              JournalHeader(onCreateJournal: _navigateToCreateJournal),
-              const SizedBox(height: 16),
-              Text('Daftar jurnal', style: FontTheme.textSemiBold),
-              const SizedBox(height: 8),
-              Expanded(
-                child: JournalList(onJournalTap: _navigateToJournalDetail),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: const Alignment(0.00, -1.00),
+              end: const Alignment(0.00, 1.00),
+              colors: [
+                BaseColors.info.shade50,
+                BaseColors.cyan.shade50,
+                BaseColors.success.shade50,
+              ],
+              stops: const [0, 0.5, 1],
+              transform: GradientRotation(169 * 3.14159 / 180),
+            ),
+          ),
+          child: SafeArea(
+            bottom: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 8),
+                  JournalHeader(onCreateJournal: _navigateToCreateJournal),
+                  const SizedBox(height: 16),
+                  Text('Daftar jurnal', style: FontTheme.textSemiBold),
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: JournalList(onJournalTap: _navigateToJournalDetail),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

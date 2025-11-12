@@ -63,10 +63,15 @@ class SharedPreferencesService {
     return _pref!.containsKey(PreferencesKeys.token);
   }
 
+  static Future<void> saveStringList(String key, List<String> value) async {
+    await _pref!.setStringList(key, value);
+  }
+
   static Future<void> removeCreds() async {
     await removeKey(PreferencesKeys.token);
     await removeKey(PreferencesKeys.displayName);
     await removeKey(PreferencesKeys.userId);
+    await removeKey(PreferencesKeys.roles);
   }
 
   static Map<String, String> getHeaders() {

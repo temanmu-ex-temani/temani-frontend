@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
 import 'package:temani_frontend/features/mood/presentation/cubit/mood_cubit.dart';
 import 'package:temani_frontend/features/activity/presentation/widgets/mood_summary_chart.dart';
@@ -41,10 +42,19 @@ class MoodSummaryReal extends StatelessWidget {
         }
 
         final summary = state.moodSummary!;
+        final moodCubit = context.read<MoodCubit>();
+        final selectedWeekStart =
+            state.selectedWeekStart ?? moodCubit.currentWeekStart;
 
         // Convert API data to chart format
         final moodSummary = _convertToChartData(summary.weeklyMood);
-        final weekRange = '${summary.weekStart} - ${summary.weekEnd}';
+        final weekStartDate =
+            _parseDate(summary.weekStart) ?? selectedWeekStart;
+        final weekEndDate =
+            _parseDate(summary.weekEnd) ?? weekStartDate.add(const Duration(days: 6));
+        final weekRange =
+            '${_formatDate(weekStartDate)} - ${_formatDate(weekEndDate)}';
+        final canGoNext = selectedWeekStart.isBefore(moodCubit.currentWeekStart);
         final averageMood = summary.averageScore;
         final bestMood = {
           'day': summary.bestMood.dayOfWeek,
@@ -54,7 +64,18 @@ class MoodSummaryReal extends StatelessWidget {
         return Column(
           children: [
             // Mood Summary Chart (original design)
-            MoodSummaryChart(moodSummary: moodSummary, weekRange: weekRange),
+            MoodSummaryChart(
+              moodSummary: moodSummary,
+              weekRange: weekRange,
+              onPreviousWeek: moodCubit.loadPreviousWeek,
+              onNextWeek: canGoNext ? moodCubit.loadNextWeek : null,
+              onWeekTap: () => _showWeekPicker(
+                context,
+                moodCubit,
+                selectedWeekStart,
+              ),
+              canGoNext: canGoNext,
+            ),
             const SizedBox(height: 16),
 
             // Average and Best Mood Cards (original design)
@@ -109,5 +130,38 @@ class MoodSummaryReal extends StatelessWidget {
           return 0; // Unknown mood
       }
     }).toList();
+  }
+
+  DateTime? _parseDate(String? value) {
+    if (value == null || value.isEmpty) return null;
+    try {
+      return DateTime.parse(value);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  String _formatDate(DateTime date) {
+    return DateFormat('d MMM yyyy').format(date);
+  }
+
+  Future<void> _showWeekPicker(
+    BuildContext context,
+    MoodCubit cubit,
+    DateTime initialWeekStart,
+  ) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: initialWeekStart,
+      firstDate: DateTime(2020, 1, 1),
+      lastDate: cubit.currentWeekStart,
+      helpText: 'Pilih tanggal mulai minggu',
+      cancelText: 'Batal',
+      confirmText: 'Pilih',
+    );
+
+    if (picked != null) {
+      cubit.loadSummaryForDate(picked);
+    }
   }
 }

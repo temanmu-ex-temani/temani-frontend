@@ -55,12 +55,12 @@ class _JournalEditDialogState extends State<JournalEditDialog> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
+                    color: BaseColors.info.shade100,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.edit_rounded,
-                    color: Colors.blue,
+                    color: BaseColors.info.shade600,
                     size: 20,
                   ),
                 ),
@@ -85,11 +85,11 @@ class _JournalEditDialogState extends State<JournalEditDialog> {
                 hintText: 'Masukkan judul jurnal',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Color(0xFFE3EAF2)),
+                borderSide: const BorderSide(color: Color(0xFFE3EAF2)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: BaseColors.primary.shade600),
+                borderSide: BorderSide(color: BaseColors.info.shade600),
                 ),
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
@@ -116,7 +116,7 @@ class _JournalEditDialogState extends State<JournalEditDialog> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: BaseColors.primary.shade600),
+                  borderSide: BorderSide(color: BaseColors.info.shade600),
                   ),
                   contentPadding: const EdgeInsets.all(16),
                 ),
@@ -159,7 +159,7 @@ class _JournalEditDialogState extends State<JournalEditDialog> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: BaseColors.primary.shade600,
+                backgroundColor: BaseColors.info.shade600,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 24,

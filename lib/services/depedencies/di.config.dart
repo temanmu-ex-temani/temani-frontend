@@ -53,6 +53,27 @@ import '../../features/mood/data/repositories/mood_repository_impl.dart'
     as _i834;
 import '../../features/mood/domain/repositories/mood_repository.dart' as _i109;
 import '../../features/mood/presentation/cubit/mood_cubit.dart' as _i25;
+import '../../features/profile/data/datasources/profile_remote_datasource.dart'
+    as _i327;
+import '../../features/profile/data/repositories/profile_repository_impl.dart'
+    as _i334;
+import '../../features/profile/domain/repositories/profile_repository.dart'
+    as _i894;
+import '../../features/profile/presentation/cubit/profile_cubit.dart' as _i36;
+import '../../features/relationship/data/datasources/relationship_remote_datasource.dart'
+    as _i101;
+import '../../features/relationship/data/repositories/relationship_repository_impl.dart'
+    as _i221;
+import '../../features/relationship/domain/repositories/relationship_repository.dart'
+    as _i242;
+import '../../features/relationship/presentation/cubit/relationship_cubit.dart'
+    as _i494;
+import '../../features/todo/data/datasources/todo_remote_datasource.dart'
+    as _i484;
+import '../../features/todo/data/repositories/todo_repository_impl.dart'
+    as _i767;
+import '../../features/todo/domain/repositories/todo_repository.dart' as _i136;
+import '../../features/todo/presentation/cubit/todo_cubit.dart' as _i680;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -72,15 +93,29 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i499.CounselingScheduleRemoteDataSource>(
       () => _i499.CounselingScheduleRemoteDataSourceImpl(dio: gh<_i361.Dio>()),
     );
+    gh.factory<_i484.TodoRemoteDataSource>(
+      () => _i484.TodoRemoteDataSourceImpl(dio: gh<_i361.Dio>()),
+    );
     gh.factory<_i485.PaymentRemoteDataSource>(
       () => _i485.PaymentRemoteDataSourceImpl(dio: gh<_i361.Dio>()),
+    );
+    gh.factory<_i101.RelationshipRemoteDataSource>(
+      () => _i101.RelationshipRemoteDataSourceImpl(dio: gh<_i361.Dio>()),
     );
     gh.factory<_i131.JournalRemoteDataSource>(
       () => _i131.JournalRemoteDataSourceImpl(dio: gh<_i361.Dio>()),
     );
+    gh.factory<_i327.ProfileRemoteDataSource>(
+      () => _i327.ProfileRemoteDataSourceImpl(dio: gh<_i361.Dio>()),
+    );
     gh.factory<_i636.JournalRepository>(
       () => _i547.JournalRepositoryImpl(
         remoteDataSource: gh<_i131.JournalRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i894.ProfileRepository>(
+      () => _i334.ProfileRepositoryImpl(
+        remoteDataSource: gh<_i327.ProfileRemoteDataSource>(),
       ),
     );
     gh.factory<_i573.PaymentRepository>(
@@ -96,6 +131,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i113.JournalCubit>(
       () => _i113.JournalCubit(repository: gh<_i636.JournalRepository>()),
     );
+    gh.factory<_i136.TodoRepository>(
+      () => _i767.TodoRepositoryImpl(
+        remoteDataSource: gh<_i484.TodoRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i25.MoodCubit>(
       () => _i25.MoodCubit(repository: gh<_i109.MoodRepository>()),
     );
@@ -107,6 +147,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i201.CounselingScheduleRepository>(
       () => _i797.CounselingScheduleRepositoryImpl(
         remoteDataSource: gh<_i499.CounselingScheduleRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i36.ProfileCubit>(
+      () => _i36.ProfileCubit(repository: gh<_i894.ProfileRepository>()),
+    );
+    gh.factory<_i242.RelationshipRepository>(
+      () => _i221.RelationshipRepositoryImpl(
+        remoteDataSource: gh<_i101.RelationshipRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i680.TodoCubit>(
+      () => _i680.TodoCubit(repository: gh<_i136.TodoRepository>()),
+    );
+    gh.factory<_i494.RelationshipCubit>(
+      () => _i494.RelationshipCubit(
+        repository: gh<_i242.RelationshipRepository>(),
       ),
     );
     gh.factory<_i883.ActivityCubit>(

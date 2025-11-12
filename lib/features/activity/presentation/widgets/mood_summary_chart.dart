@@ -5,10 +5,19 @@ import 'package:temani_frontend/core/themes/_themes.dart';
 class MoodSummaryChart extends StatelessWidget {
   final List<int> moodSummary; // 1-5 scale for each day
   final String weekRange;
+  final VoidCallback? onPreviousWeek;
+  final VoidCallback? onNextWeek;
+  final VoidCallback? onWeekTap;
+  final bool canGoNext;
+
   const MoodSummaryChart({
     super.key,
     required this.moodSummary,
     required this.weekRange,
+    this.onPreviousWeek,
+    this.onNextWeek,
+    this.onWeekTap,
+    this.canGoNext = false,
   });
 
   static const List<String> days = [
@@ -133,11 +142,47 @@ class MoodSummaryChart extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.chevron_left, color: Color(0xFF9CA3AF)),
-              Text(weekRange, style: FontTheme.textMedium),
-              Icon(Icons.chevron_right, color: Color(0xFF9CA3AF)),
+              IconButton(
+                icon: Icon(Icons.chevron_left, color: BaseColors.info.shade600),
+                onPressed: onPreviousWeek,
+                splashRadius: 20,
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: onWeekTap,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: BaseColors.info.shade50,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: BaseColors.info.shade100),
+                    ),
+                    child: Text(
+                      weekRange,
+                      textAlign: TextAlign.center,
+                      style: FontTheme.textMedium.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: BaseColors.info.shade700,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.chevron_right,
+                  color:
+                      canGoNext
+                          ? BaseColors.info.shade600
+                          : const Color(0xFF9CA3AF),
+                ),
+                onPressed: canGoNext ? onNextWeek : null,
+                splashRadius: 20,
+              ),
             ],
           ),
         ],

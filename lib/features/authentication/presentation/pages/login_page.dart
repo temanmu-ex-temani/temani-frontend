@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:temani_frontend/core/client/_client.dart';
 import 'package:temani_frontend/services/router_service.dart';
 import 'package:temani_frontend/services/shared_preference_service.dart';
-import 'package:temani_frontend/services/jwt_service.dart';
-import 'package:temani_frontend/app.dart';
 import 'dart:convert';
 import 'package:temani_frontend/core/constants/_constants.dart';
+import 'package:temani_frontend/services/toast_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -33,9 +32,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => _loading = false);
     result.fold(
       (failure) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(failure.message ?? 'Login failed')),
-        );
+        ToastService.show(context, failure.message);
       },
       (response) async {
         try {
@@ -44,6 +41,8 @@ class _LoginPageState extends State<LoginPage> {
           final token = data['data']['token'];
           final userId = data['data']['userId'];
           final username = data['data']['username'];
+          final roles = data['data']['roles'] as List<dynamic>?;
+          
           await SharedPreferencesService.saveToken(token);
           await SharedPreferencesService.saveString(
             PreferencesKeys.userId,
@@ -53,16 +52,26 @@ class _LoginPageState extends State<LoginPage> {
             PreferencesKeys.displayName,
             username,
           );
+          
+          // Save roles as string list
+          if (roles != null) {
+            final rolesList = roles.map((role) => role.toString()).toList();
+            await SharedPreferencesService.saveStringList(
+              PreferencesKeys.roles,
+              rolesList,
+            );
+          }
+          
           print("tokennya : " + token);
           print("userId : " + userId);
           print("username : " + username);
+          print("roles : " + (roles?.toString() ?? 'null'));
           if (!mounted) return;
           router.go('/main');
         } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Login succeeded but failed to process token.'),
-            ),
+          ToastService.show(
+            context,
+            'Login berhasil tetapi gagal memproses token.',
           );
         }
       },

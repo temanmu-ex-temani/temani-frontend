@@ -7,12 +7,14 @@ class MoodState extends Equatable {
   final List<MoodLog> moodLogs;
   final MoodSummary? moodSummary;
   final String errorMessage;
+  final DateTime? selectedWeekStart;
 
   const MoodState({
     this.status = MoodStatus.initial,
     this.moodLogs = const [],
     this.moodSummary,
     this.errorMessage = '',
+    this.selectedWeekStart,
   });
 
   MoodState copyWith({
@@ -20,15 +22,18 @@ class MoodState extends Equatable {
     List<MoodLog>? moodLogs,
     MoodSummary? moodSummary,
     String? errorMessage,
+    DateTime? selectedWeekStart,
   }) {
     return MoodState(
       status: status ?? this.status,
       moodLogs: moodLogs ?? this.moodLogs,
       moodSummary: moodSummary ?? this.moodSummary,
       errorMessage: errorMessage ?? this.errorMessage,
+      selectedWeekStart: selectedWeekStart ?? this.selectedWeekStart,
     );
   }
 
   @override
-  List<Object?> get props => [status, moodLogs, moodSummary, errorMessage];
+  List<Object?> get props =>
+      [status, moodLogs, moodSummary, errorMessage, selectedWeekStart];
 }

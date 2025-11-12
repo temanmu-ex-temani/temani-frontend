@@ -19,6 +19,7 @@ class CounselingSessionCard extends StatelessWidget {
   final String status;
   final String image;
   final bool canJoin;
+  final bool showConsultationButton;
 
   const CounselingSessionCard({
     super.key,
@@ -33,6 +34,7 @@ class CounselingSessionCard extends StatelessWidget {
     required this.status,
     required this.image,
     required this.canJoin,
+    this.showConsultationButton = false,
   });
 
   Color getStatusBgColor() {
@@ -267,7 +269,7 @@ class CounselingSessionCard extends StatelessWidget {
                       ),
 
                     // Show "Konsultasi Saya" button for completed sessions
-                    if (status == 'Selesai')
+                    if (status == 'Selesai' || showConsultationButton)
                       SizedBox(
                         width: double.infinity,
                         child: TemaniButton(

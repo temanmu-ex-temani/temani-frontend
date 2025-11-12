@@ -125,3 +125,71 @@ Future<Response<T>> deleteIt<T>(
   }
   return resp;
 }
+
+Future<Response<T>> patchIt<T>(
+  String url, {
+  Map<String, String>? headers,
+  Map<String, dynamic>? model,
+  Map<String, dynamic>? queryParameters,
+}) async {
+  if (kDebugMode) {
+    LoggerService.i({
+      'url': url,
+      'headers': '${SharedPreferencesService.getHeaders()}',
+      'model': '$model',
+    });
+  }
+  final getHeaders = headers ?? SharedPreferencesService.getHeaders();
+  final resp = await get<Dio>().patch<T>(
+    url,
+    data: json.encode(model),
+    options: _options.copyWith(
+      headers: getHeaders,
+    ),
+    queryParameters: queryParameters,
+  );
+  if (kDebugMode) {
+    LoggerService.i({
+      'response': '${resp.data}',
+      'statusCode': '${resp.statusCode}',
+    });
+  }
+  return resp;
+}
+
+Future<Response<T>> putMultipartIt<T>(
+  String url, {
+  Map<String, String>? headers,
+  FormData? formData,
+  Map<String, dynamic>? queryParameters,
+}) async {
+  if (kDebugMode) {
+    LoggerService.i({
+      'url': url,
+      'headers': '${SharedPreferencesService.getHeaders()}',
+      'formData': '$formData',
+    });
+  }
+
+  final token = SharedPreferencesService.getToken();
+  final getHeaders = <String, String>{
+    'Authorization': 'Bearer $token',
+    ...?headers,
+  };
+  
+  final resp = await get<Dio>().put<T>(
+    url,
+    data: formData,
+    options: _options.copyWith(
+      headers: getHeaders,
+    ),
+    queryParameters: queryParameters,
+  );
+  if (kDebugMode) {
+    LoggerService.i({
+      'response': '${resp.data}',
+      'statusCode': '${resp.statusCode}',
+    });
+  }
+  return resp;
+}

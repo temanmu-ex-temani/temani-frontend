@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:temani_frontend/features/counseling/presentation/pages/chat_page.dart';
 import 'package:temani_frontend/features/counseling/presentation/pages/counseling_page.dart';
 import 'services/router_service.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temani_frontend/features/main/presentation/pages/home_page.dart';
 import 'package:temani_frontend/features/activity/presentation/pages/activity_page.dart';
+import 'package:temani_frontend/features/profile/presentation/pages/profile_page.dart';
+import 'package:temani_frontend/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:temani_frontend/features/relationship/presentation/cubit/relationship_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:temani_frontend/services/depedencies/di.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -35,15 +39,6 @@ class _MainScaffoldState extends State<MainScaffold> {
   final PageController _pageController = PageController();
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    HomePage(),
-    ActivityPage(),
-    CounselingPage(),
-    Center(
-      child: Text('Profil', style: TextStyle(fontSize: 24, color: Colors.grey)),
-    ),
-  ];
-
   void _onTabTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -61,13 +56,36 @@ class _MainScaffoldState extends State<MainScaffold> {
     });
   }
 
+  Widget _buildPage(int index) {
+    switch (index) {
+      case 0:
+        return const HomePage(key: ValueKey('home'));
+      case 1:
+        return const ActivityPage(key: ValueKey('activity'));
+      case 2:
+        return const CounselingPage(key: ValueKey('counseling'));
+      case 3:
+        return MultiBlocProvider(
+          key: const ValueKey('profile'),
+          providers: [
+            BlocProvider(create: (context) => get<ProfileCubit>()),
+            BlocProvider(create: (context) => get<RelationshipCubit>()),
+          ],
+          child: const ProfilePage(),
+        );
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
+      body: PageView.builder(
         controller: _pageController,
         onPageChanged: _onPageChanged,
-        children: _pages,
+        itemCount: 4,
+        itemBuilder: (context, index) => _buildPage(index),
         physics: const BouncingScrollPhysics(),
       ),
       bottomNavigationBar: Container(

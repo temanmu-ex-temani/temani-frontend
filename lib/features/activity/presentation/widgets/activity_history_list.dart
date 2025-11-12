@@ -60,73 +60,19 @@ class ActivityHistoryList extends StatelessWidget {
               ),
             )
           else
-            ...activities.map(
-              (activity) => Padding(
-                padding: const EdgeInsets.only(bottom: 14),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: BaseColors.borderLight, width: 2),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 12,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: _getIconBackgroundColor(activity.feature),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              _getIconData(activity.feature),
-                              color: _getIconColor(activity.feature),
-                              size: 22,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                activity.title,
-                                style: FontTheme.textMedium.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              if (activity.description.isNotEmpty)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 2.0),
-                                  child: Text(
-                                    activity.description,
-                                    style: FontTheme.captionRegular.copyWith(
-                                      color: BaseColors.textSecondary,
-                                    ),
-                                  ),
-                                ),
-                              const SizedBox(height: 4),
-                              Text(
-                                _formatTimestamp(activity.timestamp),
-                                style: FontTheme.captionRegular.copyWith(
-                                  color: BaseColors.textSecondary,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+            SizedBox(
+              height: _calculateListHeight(activities.length),
+              child: ListView.separated(
+                padding: EdgeInsets.zero,
+                physics: const BouncingScrollPhysics(),
+                itemCount: activities.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 14),
+                itemBuilder: (context, index) => _ActivityHistoryItem(
+                  activity: activities[index],
+                  iconBackground: _getIconBackgroundColor(activities[index].feature),
+                  iconColor: _getIconColor(activities[index].feature),
+                  iconData: _getIconData(activities[index].feature),
+                  timestampText: _formatTimestamp(activities[index].timestamp),
                 ),
               ),
             ),
@@ -205,5 +151,97 @@ class ActivityHistoryList extends StatelessWidget {
     } else {
       return 'Baru saja';
     }
+  }
+  double _calculateListHeight(int count) {
+    if (count <= 0) return 0;
+    const cardHeight = 88.0;
+    const spacing = 14.0;
+    final visibleCount = count > 5 ? 5 : count;
+    return (visibleCount * cardHeight) + ((visibleCount - 1) * spacing);
+  }
+}
+
+class _ActivityHistoryItem extends StatelessWidget {
+  final Activity activity;
+  final Color iconBackground;
+  final Color iconColor;
+  final IconData iconData;
+  final String timestampText;
+
+  const _ActivityHistoryItem({
+    required this.activity,
+    required this.iconBackground,
+    required this.iconColor,
+    required this.iconData,
+    required this.timestampText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: BaseColors.borderLight, width: 2),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 12,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: iconBackground,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Icon(
+                  iconData,
+                  color: iconColor,
+                  size: 22,
+                ),
+              ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    activity.title,
+                    style: FontTheme.textMedium.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  if (activity.description.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2.0),
+                      child: Text(
+                        activity.description,
+                        style: FontTheme.captionRegular.copyWith(
+                          color: BaseColors.textSecondary,
+                        ),
+                      ),
+                    ),
+                  const SizedBox(height: 4),
+                  Text(
+                    timestampText,
+                    style: FontTheme.captionRegular.copyWith(
+                      color: BaseColors.textSecondary,
+                      fontSize: 11,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

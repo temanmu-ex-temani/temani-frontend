@@ -28,3 +28,7 @@ class UpcomingSessionsState extends Equatable {
   @override
   List<Object?> get props => [status, upcomingSessions, errorMessage];
 }
+
+
+
+

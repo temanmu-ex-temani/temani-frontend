@@ -6,10 +6,11 @@ import 'package:temani_frontend/features/main/presentation/widgets/affirmation_c
 import 'package:temani_frontend/features/main/presentation/widgets/home_header.dart';
 import 'package:temani_frontend/features/mood/presentation/widgets/mood_section_real.dart';
 import 'package:temani_frontend/features/mood/presentation/cubit/mood_cubit.dart';
-import 'package:temani_frontend/features/main/presentation/widgets/daily_task_section.dart';
 import 'package:temani_frontend/features/main/presentation/widgets/navigation_section.dart';
 import 'package:temani_frontend/features/main/presentation/widgets/upcoming_counseling_section.dart';
 import 'package:temani_frontend/features/main/presentation/widgets/emergency_call_section.dart';
+import 'package:temani_frontend/features/main/presentation/widgets/home_todo_section.dart';
+import 'package:temani_frontend/features/todo/presentation/cubit/todo_cubit.dart';
 import 'package:temani_frontend/services/shared_preference_service.dart';
 import 'package:get_it/get_it.dart';
 
@@ -22,8 +23,14 @@ class HomePage extends StatelessWidget {
       PreferencesKeys.displayName,
     );
 
-    return BlocProvider(
-      create: (context) => GetIt.instance<MoodCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => GetIt.instance<MoodCubit>()),
+        BlocProvider(
+          create: (context) =>
+              GetIt.instance<TodoCubit>()..loadTodoLists(),
+        ),
+      ],
       child: Scaffold(
         body: Container(
           height: double.infinity,
@@ -51,7 +58,7 @@ class HomePage extends StatelessWidget {
                   SizedBox(height: 16),
                   MoodSectionReal(),
                   SizedBox(height: 16),
-                  DailyTaskSection(),
+                  HomeTodoSection(),
                   SizedBox(height: 16),
                   NavigationSection(),
                   SizedBox(height: 16),

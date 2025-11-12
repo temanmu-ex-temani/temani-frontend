@@ -26,4 +26,22 @@ class EndPoints {
   static const String moodLogs = '$baseUrl/mood-logs';
   static String moodLogById(String id) => '$baseUrl/mood-logs/$id';
   static const String moodSummary = '$baseUrl/mood-logs/summary';
+
+  // Profile Endpoints
+  static const String profileMe = '$baseUrl/profiles/me';
+
+  // Relationship Endpoints
+  static const String relationships = '$baseUrl/relationships';
+  static String relationshipById(String id) => '$baseUrl/relationships/$id';
+  static const String relationshipsSearch = '$baseUrl/relationships/search';
+
+  // Todo Endpoints
+  static const String todoLists = '$baseUrl/todo-lists';
+  static const String todoListsCreate = '$baseUrl/todo-lists/create';
+  static String todoListById(String id) => '$baseUrl/todo-lists/$id';
+  static const String todoItems = '$baseUrl/todo-items';
+  static String todoItemsByList(String listId) => '$baseUrl/todo-items/$listId';
+  static String todoItemById(String id) => '$baseUrl/todo-items/$id';
+  static String todoItemToggle(String id) =>
+      '$baseUrl/todo-items/$id/toggle';
 }

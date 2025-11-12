@@ -4,6 +4,7 @@ import 'package:temani_frontend/core/themes/_themes.dart';
 import 'package:temani_frontend/features/mood/domain/entities/mood_log.dart';
 import 'package:temani_frontend/features/mood/presentation/cubit/mood_cubit.dart';
 import 'package:temani_frontend/features/mood/presentation/widgets/mood_button_real.dart';
+import 'package:temani_frontend/services/toast_service.dart';
 
 class MoodUpdateDialog extends StatefulWidget {
   final MoodLog currentMood;
@@ -36,20 +37,10 @@ class _MoodUpdateDialogState extends State<MoodUpdateDialog> {
       child: BlocConsumer<MoodCubit, MoodState>(
         listener: (context, state) {
           if (state.status == MoodStatus.error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage),
-                backgroundColor: BaseColors.error.shade500,
-              ),
-            );
+            ToastService.show(context, state.errorMessage);
           } else if (state.status == MoodStatus.success) {
             Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Mood berhasil diupdate!'),
-                backgroundColor: Colors.green,
-              ),
-            );
+            ToastService.show(context, 'Mood berhasil diperbarui');
           }
         },
         builder: (context, state) {

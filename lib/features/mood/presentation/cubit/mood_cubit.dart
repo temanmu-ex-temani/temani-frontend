@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 import 'package:temani_frontend/features/mood/domain/entities/mood_log.dart';
 import 'package:temani_frontend/features/mood/domain/entities/mood_summary.dart';
 import 'package:temani_frontend/features/mood/domain/repositories/mood_repository.dart';
@@ -135,6 +136,88 @@ class MoodCubit extends Cubit<MoodState> {
     }
   }
 
+  DateTime get currentWeekStart => _startOfWeek(DateTime.now());
+
+  bool get canNavigateForward {
+    final selected = state.selectedWeekStart ?? currentWeekStart;
+    return selected.isBefore(currentWeekStart);
+  }
+
+  Future<void> loadMoodSummary({DateTime? weekStart}) async {
+    final targetWeekStart = _startOfWeek(
+      weekStart ?? state.selectedWeekStart ?? currentWeekStart,
+    );
+
+    emit(
+      state.copyWith(
+        status: MoodStatus.loading,
+        selectedWeekStart: targetWeekStart,
+      ),
+    );
+
+    final formattedWeekStart = DateFormat('yyyy-MM-dd').format(targetWeekStart);
+    final result = await _repository.getMoodSummary(
+      weekStart: formattedWeekStart,
+    );
+
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          status: MoodStatus.error,
+          errorMessage: failure.message,
+        ),
+      ),
+      (moodSummary) {
+        final responseWeekStart = _parseWeekStart(moodSummary.weekStart) ??
+            targetWeekStart;
+        emit(
+          state.copyWith(
+            status: MoodStatus.success,
+            moodSummary: moodSummary,
+            selectedWeekStart: responseWeekStart,
+            errorMessage: '',
+          ),
+        );
+      },
+    );
+  }
+
+  void loadPreviousWeek() {
+    final base = state.selectedWeekStart ?? currentWeekStart;
+    final previousWeek = base.subtract(const Duration(days: 7));
+    loadMoodSummary(weekStart: previousWeek);
+  }
+
+  void loadNextWeek() {
+    final base = state.selectedWeekStart ?? currentWeekStart;
+    if (!base.isBefore(currentWeekStart)) return;
+    final nextWeek = base.add(const Duration(days: 7));
+    if (nextWeek.isAfter(currentWeekStart)) {
+      loadMoodSummary(weekStart: currentWeekStart);
+    } else {
+      loadMoodSummary(weekStart: nextWeek);
+    }
+  }
+
+  void loadSummaryForDate(DateTime date) {
+    loadMoodSummary(weekStart: date);
+  }
+
+  DateTime _startOfWeek(DateTime date) {
+    final normalized = DateTime(date.year, date.month, date.day);
+    final difference = normalized.weekday - DateTime.monday;
+    return normalized.subtract(Duration(days: difference));
+  }
+
+  DateTime? _parseWeekStart(String? value) {
+    if (value == null || value.isEmpty) return null;
+    try {
+      return DateTime.parse(value);
+    } catch (_) {
+      return null;
+    }
+  }
+
   // Get today's mood log if it exists
   MoodLog? getTodayMoodLog() {
     final today = DateTime.now();
@@ -170,21 +253,5 @@ class MoodCubit extends Cubit<MoodState> {
 
     final total = weekLogs.fold(0, (sum, log) => sum + log.emotionScale);
     return total / weekLogs.length;
-  }
-
-  // Load mood summary
-  Future<void> loadMoodSummary({String? weekStart}) async {
-    emit(state.copyWith(status: MoodStatus.loading));
-
-    final result = await _repository.getMoodSummary(weekStart: weekStart);
-
-    result.fold(
-      (failure) => emit(
-        state.copyWith(status: MoodStatus.error, errorMessage: failure.message),
-      ),
-      (moodSummary) => emit(
-        state.copyWith(status: MoodStatus.success, moodSummary: moodSummary),
-      ),
-    );
   }
 }

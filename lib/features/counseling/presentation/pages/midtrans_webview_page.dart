@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:temani_frontend/features/counseling/domain/entities/payment.dart';
+import 'package:temani_frontend/services/toast_service.dart';
 
 class MidtransWebViewPage extends StatefulWidget {
   final Payment payment;
@@ -56,17 +57,9 @@ class _MidtransWebViewPageState extends State<MidtransWebViewPage> {
                   setState(() {
                     isLoading = false;
                   });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('WebView error: ${error.description}'),
-                      backgroundColor: Colors.orange,
-                      action: SnackBarAction(
-                        label: 'Retry',
-                        onPressed: () {
-                          _controller.reload();
-                        },
-                      ),
-                    ),
+                  ToastService.show(
+                    context,
+                    'Terjadi kesalahan WebView: ${error.description}',
                   );
                 }
               },
@@ -92,11 +85,9 @@ class _MidtransWebViewPageState extends State<MidtransWebViewPage> {
                     url.contains('cancel') ||
                     url.contains('failure')) {
                   Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Payment was cancelled or failed'),
-                      backgroundColor: Colors.red,
-                    ),
+                  ToastService.show(
+                    context,
+                    'Pembayaran dibatalkan atau gagal',
                   );
                   return NavigationDecision.prevent;
                 }
@@ -193,20 +184,10 @@ class _MidtransWebViewPageState extends State<MidtransWebViewPage> {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
         Navigator.of(context).pop();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Could not open payment page'),
-            backgroundColor: Colors.red,
-          ),
-        );
+        ToastService.show(context, 'Tidak dapat membuka halaman pembayaran');
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error opening browser: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      ToastService.show(context, 'Gagal membuka browser: $e');
     }
   }
 }

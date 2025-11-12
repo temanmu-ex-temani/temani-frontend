@@ -4,6 +4,7 @@ import 'package:temani_frontend/core/themes/_themes.dart';
 import 'package:temani_frontend/features/mood/presentation/cubit/mood_cubit.dart';
 import 'package:temani_frontend/features/mood/presentation/widgets/mood_button_real.dart';
 import 'package:temani_frontend/features/mood/presentation/widgets/mood_update_dialog.dart';
+import 'package:temani_frontend/services/toast_service.dart';
 
 class MoodSectionReal extends StatefulWidget {
   const MoodSectionReal({super.key});
@@ -28,19 +29,9 @@ class _MoodSectionRealState extends State<MoodSectionReal> {
     return BlocConsumer<MoodCubit, MoodState>(
       listener: (context, state) {
         if (state.status == MoodStatus.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage),
-              backgroundColor: BaseColors.error.shade500,
-            ),
-          );
+          ToastService.show(context, state.errorMessage);
         } else if (state.status == MoodStatus.success && selectedMood != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Mood berhasil dicatat!'),
-              backgroundColor: Colors.green,
-            ),
-          );
+          ToastService.show(context, 'Mood berhasil dicatat!');
           setState(() {
             selectedMood = null;
           });

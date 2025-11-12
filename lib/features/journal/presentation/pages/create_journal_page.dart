@@ -6,6 +6,7 @@ import 'package:temani_frontend/features/journal/presentation/cubit/journal_cubi
 import 'package:temani_frontend/services/depedencies/di.dart';
 import '../widgets/create_journal_title_input.dart';
 import '../widgets/create_journal_content_input.dart';
+import 'package:temani_frontend/services/toast_service.dart';
 
 class CreateJournalPage extends StatefulWidget {
   const CreateJournalPage({super.key});
@@ -40,33 +41,21 @@ class _CreateJournalPageState extends State<CreateJournalPage> {
       child: BlocListener<JournalCubit, JournalState>(
         listener: (context, state) {
           if (state is JournalError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
-              ),
-            );
+            ToastService.show(context, state.message);
             setState(() {
               _isLoading = false;
             });
           } else if (state is JournalCreated && _isLoading) {
-            // Journal was created successfully
             setState(() {
               _isLoading = false;
             });
-            // Show success message
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Jurnal berhasil ditambahkan'),
-                backgroundColor: Colors.green,
-              ),
-            );
-            // Navigate back to journal page and trigger refresh
-            Navigator.of(context).pop(true); // Pass true to indicate success
+            ToastService.show(context, 'Jurnal berhasil ditambahkan');
+            Navigator.of(context).pop(true);
           }
         },
         child: Scaffold(
-          backgroundColor: const Color(0xFFF6FAFF),
+          extendBodyBehindAppBar: false,
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -86,29 +75,47 @@ class _CreateJournalPageState extends State<CreateJournalPage> {
               ),
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 8),
-                CreateJournalTitleInput(controller: _titleController),
-                const SizedBox(height: 16),
-                CreateJournalContentInput(controller: _contentController),
-                const Spacer(),
-                Row(
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: const Alignment(0.00, -1.00),
+                end: const Alignment(0.00, 1.00),
+                colors: [
+                  BaseColors.info.shade50,
+                  BaseColors.cyan.shade50,
+                  BaseColors.success.shade50,
+                ],
+                stops: const [0, 0.5, 1],
+                transform: GradientRotation(169 * 3.14159 / 180),
+              ),
+            ),
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: TemaniButton(
-                        type: 3,
-                        text: _isLoading ? 'Menyimpan...' : 'Simpan',
-                        onPressed: _isLoading ? null : _saveJournal,
-                      ),
+                    const SizedBox(height: 8),
+                    CreateJournalTitleInput(controller: _titleController),
+                    const SizedBox(height: 16),
+                    CreateJournalContentInput(controller: _contentController),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TemaniButton(
+                            type: 3,
+                            text: _isLoading ? 'Menyimpan...' : 'Simpan',
+                            onPressed: _isLoading ? null : _saveJournal,
+                          ),
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 24),
                   ],
                 ),
-                const SizedBox(height: 24),
-              ],
+              ),
             ),
           ),
         ),
@@ -119,12 +126,7 @@ class _CreateJournalPageState extends State<CreateJournalPage> {
   void _saveJournal() {
     if (_titleController.text.trim().isEmpty ||
         _contentController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Judul dan konten tidak boleh kosong'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      ToastService.show(context, 'Judul dan konten tidak boleh kosong');
       return;
     }
 

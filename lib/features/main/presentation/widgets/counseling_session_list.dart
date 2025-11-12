@@ -26,6 +26,7 @@ class CounselingSessionList extends StatelessWidget {
               status: _getLocalizedStatus(session.status),
               image: 'assets/doctor.jpg', // Default image
               canJoin: _canJoinSession(session.status),
+              showConsultationButton: session.status == 'COMPLETED',
             ),
           ),
       ],
@@ -80,6 +81,8 @@ class CounselingSessionList extends StatelessWidget {
         return 'Terjadwal';
       case 'ONGOING':
         return 'Berlangsung';
+      case 'COMPLETED':
+        return 'Selesai';
       default:
         return status;
     }
