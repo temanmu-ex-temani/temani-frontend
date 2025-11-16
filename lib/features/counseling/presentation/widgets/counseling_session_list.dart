@@ -5,7 +5,12 @@ import 'package:temani_frontend/features/counseling/presentation/widgets/counsel
 
 class CounselingSessionList extends StatelessWidget {
   final List<CounselingSchedule> sessions;
-  const CounselingSessionList({super.key, required this.sessions});
+  final bool showClientName;
+  const CounselingSessionList({
+    super.key,
+    required this.sessions,
+    this.showClientName = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +21,29 @@ class CounselingSessionList extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 16.0),
             child: CounselingSessionCard(
               id: session.id,
-              name: session.counselorName,
+              name: showClientName
+                  ? (session.status == 'AVAILABLE' 
+                      ? '-' 
+                      : (session.clientName ?? session.counselorName))
+                  : session.counselorName,
               title: session.title,
               counselorId: session.counselorId,
+              counselorName: session.counselorName,
               counselorUsername: session.counselorUsername,
               clientId: session.clientId,
+              clientName: session.status == 'AVAILABLE' 
+                  ? '-' 
+                  : session.clientName,
               date: _formatDate(session.scheduledAt),
               time: _formatTime(session.scheduledAt),
               status: _getLocalizedStatus(session.status),
+              rawStatus: session.status,
               image: 'assets/doctor.jpg', // Default image
               canJoin: _canJoinSession(session.status),
+              showClientName: showClientName,
+              description: session.description,
+              meetingLink: session.meetingLink,
+              notes: session.notes,
             ),
           ),
       ],

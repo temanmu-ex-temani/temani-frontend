@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
 import 'package:temani_frontend/core/constants/_constants.dart';
 import 'package:temani_frontend/core/themes/_themes.dart';
+import 'package:temani_frontend/features/counseling/presentation/cubit/counseling_sessions_cubit.dart';
 import 'package:temani_frontend/features/counseling/presentation/widgets/counseling_details_bottom_sheet.dart';
 import 'package:temani_frontend/services/router_service.dart';
 import 'package:temani_frontend/services/shared_preference_service.dart';
+import 'package:temani_frontend/services/toast_service.dart';
+import 'package:temani_frontend/services/depedencies/di.dart';
 
 class CounselingSessionCard extends StatelessWidget {
   final String id;
   final String name;
   final String title;
   final String counselorId;
+  final String counselorName;
   final String counselorUsername;
   final String? clientId;
+  final String? clientName;
   final String date;
   final String time;
-  final String status;
+  final String status; // Localized status (e.g., "Terjadwal")
+  final String? rawStatus; // Raw status (e.g., "SCHEDULED", "PENDING")
   final String image;
   final bool canJoin;
   final bool showConsultationButton;
+  final bool showClientName;
+  final String? description;
+  final String? meetingLink;
+  final String? notes;
 
   const CounselingSessionCard({
     super.key,
@@ -27,14 +38,21 @@ class CounselingSessionCard extends StatelessWidget {
     required this.name,
     required this.title,
     required this.counselorId,
+    required this.counselorName,
     required this.counselorUsername,
     this.clientId,
+    this.clientName,
     required this.date,
     required this.time,
     required this.status,
+    this.rawStatus,
     required this.image,
     required this.canJoin,
     this.showConsultationButton = false,
+    this.showClientName = false,
+    this.description,
+    this.meetingLink,
+    this.notes,
   });
 
   Color getStatusBgColor() {
@@ -101,6 +119,7 @@ class CounselingSessionCard extends StatelessWidget {
   void _navigateToChatRoom() {
     // Use the schedule ID as session ID and counselor info
     final sessionId = id; // This is the schedule ID
+    final scheduleId = id; // Schedule ID for status updates
     final counselorName = name; // This is the counselor display name
 
     // Get current user's ID
@@ -119,7 +138,7 @@ class CounselingSessionCard extends StatelessWidget {
     }
 
     router.push(
-      '/chat?sessionId=$sessionId&receiverId=$receiverId&counselorName=$counselorName',
+      '/chat?sessionId=$sessionId&receiverId=$receiverId&counselorName=$counselorName&scheduleId=$scheduleId',
     );
   }
 
@@ -209,7 +228,7 @@ class CounselingSessionCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 4),
-                // Counselor name with icon
+                // Client name with icon
                 Row(
                   children: [
                     Icon(
@@ -218,6 +237,14 @@ class CounselingSessionCard extends StatelessWidget {
                       color: Color(0xFF64748B), // textSecondary
                     ),
                     const SizedBox(width: 6),
+                    Text(
+                      showClientName ? 'Klien: ' : '',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFF64748B),
+                        fontWeight: showClientName ? FontWeight.w600 : FontWeight.normal,
+                      ),
+                    ),
                     Text(
                       name,
                       style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
@@ -257,6 +284,20 @@ class CounselingSessionCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 Column(
                   children: [
+                    // Show "Mulai Sesi" button for SCHEDULED/PENDING status
+                    // Only show if CounselingSessionsCubit is available (for PEER role in counseling pages)
+                    if ((rawStatus == 'SCHEDULED' || rawStatus == 'PENDING'))
+                      _ConditionalMulaiSesiButton(
+                        scheduleId: id,
+                      ),
+
+                    // Show "Batalkan Sesi" button for AVAILABLE status
+                    // Works for both PEER and CLIENT roles
+                    if (rawStatus == 'AVAILABLE')
+                      _ConditionalBatalkanSesiButton(
+                        scheduleId: id,
+                      ),
+
                     // Show "Gabung" button for active sessions
                     if (canJoin)
                       SizedBox(
@@ -279,7 +320,7 @@ class CounselingSessionCard extends StatelessWidget {
                         ),
                       ),
 
-                    if (canJoin || status == 'Selesai')
+                    if (rawStatus == 'SCHEDULED' || rawStatus == 'PENDING' || rawStatus == 'AVAILABLE' || canJoin || status == 'Selesai')
                       const SizedBox(height: 8),
 
                     // Detail button
@@ -294,6 +335,16 @@ class CounselingSessionCard extends StatelessWidget {
                             builder:
                                 (context) => CounselingDetailsBottomSheet(
                                   status: status,
+                                  title: title,
+                                  counselorName: counselorName,
+                                  clientName: clientName,
+                                  date: date,
+                                  time: time,
+                                  id: id,
+                                  showClientName: showClientName,
+                                  description: description,
+                                  meetingLink: meetingLink,
+                                  notes: notes,
                                 ),
                           );
                         },
@@ -323,5 +374,110 @@ class CounselingSessionCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+// Helper widget that conditionally shows "Mulai Sesi" button
+// only if CounselingSessionsCubit is available in the widget tree
+class _ConditionalMulaiSesiButton extends StatelessWidget {
+  final String scheduleId;
+
+  const _ConditionalMulaiSesiButton({
+    required this.scheduleId,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Try to find the cubit in the widget tree
+    try {
+      final cubit = BlocProvider.of<CounselingSessionsCubit>(context, listen: false);
+      // If cubit is found, render the button (no need for BlocBuilder since we don't need to rebuild)
+      return SizedBox(
+        width: double.infinity,
+        child: TemaniButton(
+          type: 3,
+          text: 'Mulai Sesi',
+          onPressed: () async {
+            final success = await cubit.updateScheduleStatus(
+              scheduleId: scheduleId,
+              status: 'ONGOING',
+            );
+            if (success) {
+              ToastService.show(context, 'Sesi dimulai');
+            } else {
+              ToastService.show(context, 'Gagal memulai sesi');
+            }
+          },
+        ),
+      );
+    } catch (e) {
+      // CounselingSessionsCubit not available (e.g., in homepage)
+      // Don't show the button
+      return SizedBox.shrink();
+    }
+  }
+}
+
+// Helper widget that shows "Batalkan Sesi" button for AVAILABLE schedules
+// Works for both PEER and CLIENT roles
+class _ConditionalBatalkanSesiButton extends StatelessWidget {
+  final String scheduleId;
+
+  const _ConditionalBatalkanSesiButton({
+    required this.scheduleId,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // Try to find the cubit in the widget tree
+    try {
+      final cubit = BlocProvider.of<CounselingSessionsCubit>(context, listen: false);
+      // If cubit is found, render the button
+      return SizedBox(
+        width: double.infinity,
+        child: TemaniButton(
+          type: 2, // Use type 2 for secondary/cancel button style
+          text: 'Batalkan Sesi',
+          onPressed: () async {
+            final success = await cubit.updateScheduleStatus(
+              scheduleId: scheduleId,
+              status: 'CANCELLED',
+            );
+            if (success) {
+              ToastService.show(context, 'Sesi berhasil dibatalkan');
+            } else {
+              ToastService.show(context, 'Gagal membatalkan sesi');
+            }
+          },
+        ),
+      );
+    } catch (e) {
+      // CounselingSessionsCubit not available (e.g., in homepage)
+      // Try to get it from DI and use it directly
+      try {
+        final cubit = get<CounselingSessionsCubit>();
+        return SizedBox(
+          width: double.infinity,
+          child: TemaniButton(
+            type: 2, // Use type 2 for secondary/cancel button style
+            text: 'Batalkan Sesi',
+            onPressed: () async {
+              final success = await cubit.updateScheduleStatus(
+                scheduleId: scheduleId,
+                status: 'CANCELLED',
+              );
+              if (success) {
+                ToastService.show(context, 'Sesi berhasil dibatalkan');
+              } else {
+                ToastService.show(context, 'Gagal membatalkan sesi');
+              }
+            },
+          ),
+        );
+      } catch (e2) {
+        // If cubit is still not available, don't show the button
+        return SizedBox.shrink();
+      }
+    }
   }
 }

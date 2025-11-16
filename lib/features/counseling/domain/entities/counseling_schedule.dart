@@ -1,6 +1,7 @@
 class CounselingSchedule {
   final String id;
   final String? clientId;
+  final String? clientName;
   final String counselorId;
   final String counselorName;
   final String counselorUsername;
@@ -14,6 +15,7 @@ class CounselingSchedule {
   CounselingSchedule({
     required this.id,
     this.clientId,
+    this.clientName,
     required this.counselorId,
     required this.counselorName,
     required this.counselorUsername,

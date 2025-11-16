@@ -16,11 +16,41 @@ class RelationshipRepositoryImpl implements RelationshipRepository {
   @override
   Future<Either<Failure, Relationship>> createRelationship(
       String targetId) async {
-    final result = await _remoteDataSource.createRelationship(targetId);
-    return result.fold(
-      (failure) => Left(failure),
-      (response) => Right(response.data!),
-    );
+    print('[RelationshipRepository] createRelationship called');
+    print('[RelationshipRepository] targetId: $targetId');
+    
+    try {
+      print('[RelationshipRepository] Calling remoteDataSource.createRelationship...');
+      final result = await _remoteDataSource.createRelationship(targetId);
+      print('[RelationshipRepository] RemoteDataSource call completed');
+      
+      return result.fold(
+        (failure) {
+          print('[RelationshipRepository] RemoteDataSource returned failure');
+          print('[RelationshipRepository] Failure type: ${failure.runtimeType}');
+          print('[RelationshipRepository] Failure message: ${failure.message}');
+          return Left(failure);
+        },
+        (response) {
+          print('[RelationshipRepository] RemoteDataSource returned success');
+          print('[RelationshipRepository] Response status: ${response.status}');
+          print('[RelationshipRepository] Response message: ${response.message}');
+          print('[RelationshipRepository] Response data: ${response.data}');
+          
+          if (response.data == null) {
+            print('[RelationshipRepository] ERROR: Response data is null!');
+            return Left(Failure(message: 'Response data is null'));
+          }
+          
+          print('[RelationshipRepository] Returning relationship: ${response.data!.id}');
+          return Right(response.data!);
+        },
+      );
+    } catch (e, stackTrace) {
+      print('[RelationshipRepository] Exception in createRelationship: $e');
+      print('[RelationshipRepository] Stack trace: $stackTrace');
+      return Left(Failure(message: 'Repository error: ${e.toString()}'));
+    }
   }
 
   @override

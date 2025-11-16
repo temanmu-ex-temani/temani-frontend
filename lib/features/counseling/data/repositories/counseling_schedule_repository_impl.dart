@@ -41,10 +41,61 @@ class CounselingScheduleRepositoryImpl implements CounselingScheduleRepository {
     );
   }
 
+  @override
+  Future<Either<Failure, List<CounselingSchedule>>> getPeerCounselingSchedules() async {
+    final result = await remoteDataSource.getPeerCounselingSchedules();
+
+    return result.fold(
+      (failure) => Left(failure),
+      (response) => Right(
+        response.data.map((model) => _mapModelToEntity(model)).toList(),
+      ),
+    );
+  }
+
+  @override
+  Future<Either<Failure, CounselingSchedule>> createSchedule({
+    required DateTime scheduledAt,
+    required String title,
+    required String description,
+    required String meetingLink,
+    required String notes,
+  }) async {
+    final result = await remoteDataSource.createSchedule(
+      scheduledAt: scheduledAt,
+      title: title,
+      description: description,
+      meetingLink: meetingLink,
+      notes: notes,
+    );
+
+    return result.fold(
+      (failure) => Left(failure),
+      (model) => Right(_mapModelToEntity(model)),
+    );
+  }
+
+  @override
+  Future<Either<Failure, CounselingSchedule>> updateScheduleStatus({
+    required String scheduleId,
+    required String status,
+  }) async {
+    final result = await remoteDataSource.updateScheduleStatus(
+      scheduleId: scheduleId,
+      status: status,
+    );
+
+    return result.fold(
+      (failure) => Left(failure),
+      (model) => Right(_mapModelToEntity(model)),
+    );
+  }
+
   CounselingSchedule _mapModelToEntity(CounselingScheduleModel model) {
     return CounselingSchedule(
       id: model.id,
       clientId: model.clientId,
+      clientName: model.clientName,
       counselorId: model.counselorId,
       counselorName: model.counselorName,
       counselorUsername: model.counselorUsername,

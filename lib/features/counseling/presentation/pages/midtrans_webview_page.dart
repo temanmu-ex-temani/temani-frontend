@@ -3,6 +3,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:temani_frontend/features/counseling/domain/entities/payment.dart';
 import 'package:temani_frontend/services/toast_service.dart';
+import 'package:temani_frontend/services/router_service.dart';
 
 class MidtransWebViewPage extends StatefulWidget {
   final Payment payment;
@@ -110,7 +111,10 @@ class _MidtransWebViewPageState extends State<MidtransWebViewPage> {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
+            // Allow user to exit payment page without blocking future bookings
+            // The pending payment will be handled by the backend
             Navigator.of(context).pop();
+            router.pop(); // Also pop the payment page
           },
         ),
         actions: [

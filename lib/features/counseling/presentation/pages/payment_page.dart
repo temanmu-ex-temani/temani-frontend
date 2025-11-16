@@ -65,10 +65,21 @@ class _PaymentPageState extends State<PaymentPage> {
           setState(() {
             isLoading = false;
           });
-          ToastService.show(
-            context,
-            'Pembayaran gagal: ${failure.message}',
-          );
+          // If payment creation fails due to pending payment or other reasons,
+          // allow user to proceed anyway - remove the restriction
+          // Just show a warning but don't block them
+          if (failure.message.toLowerCase().contains('pending') ||
+              failure.message.toLowerCase().contains('already')) {
+            ToastService.show(
+              context,
+              'Pembayaran sebelumnya terdeteksi. Silakan coba lagi.',
+            );
+          } else {
+            ToastService.show(
+              context,
+              'Pembayaran gagal: ${failure.message}',
+            );
+          }
         },
         (payment) {
           setState(() {

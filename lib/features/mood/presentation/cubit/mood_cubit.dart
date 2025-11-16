@@ -182,6 +182,49 @@ class MoodCubit extends Cubit<MoodState> {
     );
   }
 
+  Future<void> loadMoodSummaryByUserId(
+    String userId, {
+    DateTime? weekStart,
+  }) async {
+    final targetWeekStart = _startOfWeek(
+      weekStart ?? state.selectedWeekStart ?? currentWeekStart,
+    );
+
+    emit(
+      state.copyWith(
+        status: MoodStatus.loading,
+        selectedWeekStart: targetWeekStart,
+      ),
+    );
+
+    final formattedWeekStart = DateFormat('yyyy-MM-dd').format(targetWeekStart);
+    final result = await _repository.getMoodSummaryByUserId(
+      userId,
+      weekStart: formattedWeekStart,
+    );
+
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          status: MoodStatus.error,
+          errorMessage: failure.message,
+        ),
+      ),
+      (moodSummary) {
+        final responseWeekStart = _parseWeekStart(moodSummary.weekStart) ??
+            targetWeekStart;
+        emit(
+          state.copyWith(
+            status: MoodStatus.success,
+            moodSummary: moodSummary,
+            selectedWeekStart: responseWeekStart,
+            errorMessage: '',
+          ),
+        );
+      },
+    );
+  }
+
   void loadPreviousWeek() {
     final base = state.selectedWeekStart ?? currentWeekStart;
     final previousWeek = base.subtract(const Duration(days: 7));

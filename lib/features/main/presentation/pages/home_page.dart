@@ -11,11 +11,46 @@ import 'package:temani_frontend/features/main/presentation/widgets/upcoming_coun
 import 'package:temani_frontend/features/main/presentation/widgets/emergency_call_section.dart';
 import 'package:temani_frontend/features/main/presentation/widgets/home_todo_section.dart';
 import 'package:temani_frontend/features/todo/presentation/cubit/todo_cubit.dart';
+import 'package:temani_frontend/features/main/presentation/cubit/upcoming_sessions_cubit.dart';
 import 'package:temani_frontend/services/shared_preference_service.dart';
 import 'package:get_it/get_it.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && mounted) {
+      // Refresh upcoming sessions when app comes back to foreground
+      _refreshUpcomingSessions();
+    }
+  }
+
+  void _refreshUpcomingSessions() {
+    try {
+      final upcomingSessionsCubit = GetIt.instance<UpcomingSessionsCubit>();
+      upcomingSessionsCubit.loadUpcomingSessions();
+    } catch (e) {
+      print('Could not refresh upcoming sessions: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

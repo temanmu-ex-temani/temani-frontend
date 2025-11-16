@@ -1,6 +1,8 @@
+import 'package:either_dart/either.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:equatable/equatable.dart';
+import 'package:temani_frontend/core/errors/failure.dart';
 import 'package:temani_frontend/features/activity/domain/entities/activity.dart';
 import 'package:temani_frontend/features/activity/domain/repositories/activity_repository.dart';
 
@@ -57,6 +59,11 @@ class ActivityCubit extends Cubit<ActivityState> {
         ),
       ),
     );
+  }
+
+  Future<Either<Failure, List<Activity>>> loadActivitiesByUserId(String userId) async {
+    final result = await _repository.getActivitiesByUserId(userId);
+    return result;
   }
 
   Future<void> createTestActivity() async {

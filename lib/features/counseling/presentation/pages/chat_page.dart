@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
 import 'package:temani_frontend/core/constants/_constants.dart';
 import 'package:temani_frontend/services/shared_preference_service.dart';
+import 'package:temani_frontend/features/counseling/presentation/cubit/counseling_sessions_cubit.dart';
+import 'package:temani_frontend/features/main/presentation/cubit/upcoming_sessions_cubit.dart';
+import 'package:temani_frontend/services/depedencies/di.dart';
+import 'package:temani_frontend/services/toast_service.dart';
 import 'dart:convert';
 import 'package:temani_frontend/core/client/_client.dart';
 import 'package:intl/intl.dart';
@@ -10,11 +14,13 @@ class ChatPage extends StatefulWidget {
   final String sessionId;
   final String receiverUsername;
   final String counselorName;
+  final String? scheduleId; // Add scheduleId parameter
   const ChatPage({
     super.key,
     required this.sessionId,
     required this.receiverUsername,
     required this.counselorName,
+    this.scheduleId,
   });
 
   @override
@@ -108,15 +114,21 @@ class _ChatPageState extends State<ChatPage> {
         webSocketConnectHeaders: {'Authorization': 'Bearer $token'},
         onWebSocketError: (dynamic error) {
           print('[ChatPage] WebSocket error: $error');
-          setState(() => connected = false);
+          if (mounted) {
+            setState(() => connected = false);
+          }
         },
         onDisconnect: (frame) {
           print('[ChatPage] WebSocket disconnected');
-          setState(() => connected = false);
+          if (mounted) {
+            setState(() => connected = false);
+          }
         },
         onStompError: (frame) {
           print('[ChatPage] STOMP error: ${frame.body}');
-          setState(() => connected = false);
+          if (mounted) {
+            setState(() => connected = false);
+          }
         },
         heartbeatIncoming: Duration(seconds: 0),
         heartbeatOutgoing: Duration(seconds: 0),
@@ -128,12 +140,14 @@ class _ChatPageState extends State<ChatPage> {
 
   void _onConnect(StompFrame frame) {
     print('[ChatPage] _onConnect called');
-    setState(() => connected = true);
+    if (mounted) {
+      setState(() => connected = true);
+    }
     stompClient!.subscribe(
       destination: '/user/queue/messages/${widget.sessionId}',
       callback: (frame) {
         print('[ChatPage] Received message frame: ${frame.body}');
-        if (frame.body != null) {
+        if (frame.body != null && mounted) {
           final msg = json.decode(frame.body!);
           setState(() {
             messages.add(msg);
@@ -184,8 +198,68 @@ class _ChatPageState extends State<ChatPage> {
     super.dispose();
   }
 
+  bool _isPeer() {
+    final roles = SharedPreferencesService.getStringList(PreferencesKeys.roles);
+    // Prioritize CLIENT role - if user has CLIENT role, treat as CLIENT
+    // even if they also have PEER role
+    if (roles != null && 
+        (roles.contains('CLIENT') || roles.contains('ROLE_CLIENT'))) {
+      return false;
+    }
+    return roles != null &&
+        (roles.contains('PEER') || roles.contains('ROLE_PEER'));
+  }
+
+  Future<void> _endSessionWithId(String scheduleId) async {
+    if (scheduleId.isEmpty) {
+      ToastService.show(context, 'Schedule ID tidak ditemukan');
+      return;
+    }
+
+    final cubit = get<CounselingSessionsCubit>();
+    final success = await cubit.updateScheduleStatus(
+      scheduleId: scheduleId,
+      status: 'COMPLETED',
+    );
+
+    if (success) {
+      ToastService.show(context, 'Sesi berhasil diakhiri');
+      
+      // Refresh the upcoming sessions on the homepage
+      // Don't await - let it refresh in the background
+      try {
+        final upcomingSessionsCubit = get<UpcomingSessionsCubit>();
+        upcomingSessionsCubit.loadUpcomingSessions();
+      } catch (e) {
+        // UpcomingSessionsCubit might not be available, ignore
+        print('Could not refresh upcoming sessions: $e');
+      }
+      
+      // Use post-frame callback to ensure Navigator is ready
+      if (mounted) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
+        });
+      }
+    } else {
+      ToastService.show(context, 'Gagal mengakhiri sesi');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isPeer = _isPeer();
+    // Use sessionId as fallback for scheduleId since they're the same
+    final scheduleId = widget.scheduleId ?? widget.sessionId;
+    
+    // Debug logging
+    print('[ChatPage] isPeer: $isPeer');
+    print('[ChatPage] scheduleId: $scheduleId');
+    print('[ChatPage] widget.scheduleId: ${widget.scheduleId}');
+    print('[ChatPage] widget.sessionId: ${widget.sessionId}');
+    
     return Scaffold(
       backgroundColor: Color(0xFFF7FAFC),
       appBar: AppBar(
@@ -198,10 +272,22 @@ class _ChatPageState extends State<ChatPage> {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: Icon(Icons.call, color: Colors.black),
-            onPressed: () {},
-          ),
+          if (isPeer)
+            TextButton(
+              onPressed: () => _endSessionWithId(scheduleId),
+              child: Text(
+                'Akhiri',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+          else
+            IconButton(
+              icon: Icon(Icons.call, color: Colors.black),
+              onPressed: () {},
+            ),
         ],
       ),
       body:

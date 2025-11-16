@@ -38,6 +38,8 @@ import '../../features/counseling/presentation/cubit/book_consultation_cubit.dar
     as _i82;
 import '../../features/counseling/presentation/cubit/counseling_sessions_cubit.dart'
     as _i186;
+import '../../features/counseling/presentation/cubit/create_schedule_cubit.dart'
+    as _i345;
 import '../../features/journal/data/datasources/journal_remote_datasource.dart'
     as _i131;
 import '../../features/journal/data/repositories/journal_repository_impl.dart'
@@ -168,6 +170,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i883.ActivityCubit>(
       () => _i883.ActivityCubit(repository: gh<_i387.ActivityRepository>()),
     );
+    gh.lazySingleton<_i733.UpcomingSessionsCubit>(
+      () => _i733.UpcomingSessionsCubit(
+        repository: gh<_i201.CounselingScheduleRepository>(),
+      ),
+    );
     gh.factory<_i82.BookConsultationCubit>(
       () => _i82.BookConsultationCubit(
         repository: gh<_i201.CounselingScheduleRepository>(),
@@ -178,8 +185,8 @@ extension GetItInjectableX on _i174.GetIt {
         repository: gh<_i201.CounselingScheduleRepository>(),
       ),
     );
-    gh.factory<_i733.UpcomingSessionsCubit>(
-      () => _i733.UpcomingSessionsCubit(
+    gh.factory<_i345.CreateScheduleCubit>(
+      () => _i345.CreateScheduleCubit(
         repository: gh<_i201.CounselingScheduleRepository>(),
       ),
     );

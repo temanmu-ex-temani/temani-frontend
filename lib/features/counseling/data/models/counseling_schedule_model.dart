@@ -1,6 +1,7 @@
 class CounselingScheduleModel {
   final String id;
   final String? clientId;
+  final String? clientName;
   final String counselorId;
   final String counselorName;
   final String counselorUsername;
@@ -14,6 +15,7 @@ class CounselingScheduleModel {
   CounselingScheduleModel({
     required this.id,
     this.clientId,
+    this.clientName,
     required this.counselorId,
     required this.counselorName,
     required this.counselorUsername,
@@ -29,6 +31,7 @@ class CounselingScheduleModel {
     return CounselingScheduleModel(
       id: json['id'] as String,
       clientId: json['clientId'] as String?,
+      clientName: json['clientName'] as String?,
       counselorId: json['counselorId'] as String,
       counselorName: json['counselorName'] as String,
       counselorUsername: json['counselorName'] as String,
@@ -45,6 +48,7 @@ class CounselingScheduleModel {
     return {
       'id': id,
       if (clientId != null) 'clientId': clientId,
+      if (clientName != null) 'clientName': clientName,
       'counselorId': counselorId,
       'counselorName': counselorName,
       'counselorUsername': counselorUsername,
@@ -60,6 +64,7 @@ class CounselingScheduleModel {
   CounselingScheduleModel copyWith({
     String? id,
     String? clientId,
+    String? clientName,
     String? counselorId,
     String? counselorName,
     String? counselorUsername,
@@ -73,6 +78,7 @@ class CounselingScheduleModel {
     return CounselingScheduleModel(
       id: id ?? this.id,
       clientId: clientId ?? this.clientId,
+      clientName: clientName ?? this.clientName,
       counselorId: counselorId ?? this.counselorId,
       counselorName: counselorName ?? this.counselorName,
       counselorUsername: counselorUsername ?? this.counselorUsername,

@@ -6,7 +6,7 @@ import 'package:temani_frontend/features/counseling/domain/repositories/counseli
 
 part 'upcoming_sessions_state.dart';
 
-@injectable
+@lazySingleton
 class UpcomingSessionsCubit extends Cubit<UpcomingSessionsState> {
   final CounselingScheduleRepository _repository;
 
@@ -52,6 +52,9 @@ class UpcomingSessionsCubit extends Cubit<UpcomingSessionsState> {
     return status == 'ONGOING';
   }
 }
+
+
+
 
 
 

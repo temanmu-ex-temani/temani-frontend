@@ -31,6 +31,15 @@ class ActivityRepositoryImpl implements ActivityRepository {
   }
 
   @override
+  Future<Either<Failure, List<Activity>>> getActivitiesByUserId(String userId) async {
+    final result = await _remoteDataSource.getActivitiesByUserId(userId);
+    return result.fold(
+      (failure) => Left(failure),
+      (response) => Right(response.data),
+    );
+  }
+
+  @override
   Future<Either<Failure, List<Activity>>> createTestActivity() async {
     final result = await _remoteDataSource.createTestActivity();
     return result.fold(

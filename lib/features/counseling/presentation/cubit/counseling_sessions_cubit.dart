@@ -37,6 +37,34 @@ class CounselingSessionsCubit extends Cubit<CounselingSessionsState> {
     );
   }
 
+  Future<void> loadPeerCounselingSessions() async {
+    emit(state.copyWith(status: CounselingSessionsStatus.loading));
+
+    final result = await _repository.getPeerCounselingSchedules();
+
+    result.fold(
+      (failure) {
+        print('Error loading peer sessions: ${failure.message}');
+        emit(
+          state.copyWith(
+            status: CounselingSessionsStatus.error,
+            errorMessage: failure.message,
+          ),
+        );
+      },
+      (sessions) {
+        print('Successfully loaded ${sessions.length} peer sessions');
+        print('Sessions: ${sessions.map((s) => '${s.title} - ${s.status}').toList()}');
+        emit(
+          state.copyWith(
+            status: CounselingSessionsStatus.success,
+            allSessions: sessions,
+          ),
+        );
+      },
+    );
+  }
+
   List<CounselingSchedule> getFilteredSessions(int selectedTab) {
     switch (selectedTab) {
       case 1: // Berjalan: PENDING, SCHEDULED, ONGOING
@@ -73,5 +101,37 @@ class CounselingSessionsCubit extends Cubit<CounselingSessionsState> {
 
   bool canJoinSession(String status) {
     return status == 'ONGOING';
+  }
+
+  Future<bool> updateScheduleStatus({
+    required String scheduleId,
+    required String status,
+  }) async {
+    final result = await _repository.updateScheduleStatus(
+      scheduleId: scheduleId,
+      status: status,
+    );
+
+    return result.fold(
+      (failure) {
+        // Return false to indicate failure
+        print('Error updating schedule status: ${failure.message}');
+        return false;
+      },
+      (updatedSchedule) {
+        // Update the schedule in the list
+        final updatedSessions = state.allSessions.map((session) {
+          return session.id == scheduleId ? updatedSchedule : session;
+        }).toList();
+
+        emit(
+          state.copyWith(
+            status: CounselingSessionsStatus.success,
+            allSessions: updatedSessions,
+          ),
+        );
+        return true;
+      },
+    );
   }
 }

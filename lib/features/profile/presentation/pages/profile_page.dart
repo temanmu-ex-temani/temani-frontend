@@ -15,6 +15,7 @@ import 'package:temani_frontend/features/relationship/domain/entities/relationsh
     as relationship_entity;
 import 'package:temani_frontend/services/shared_preference_service.dart';
 import 'package:temani_frontend/services/toast_service.dart';
+import 'package:temani_frontend/services/router_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -171,6 +172,21 @@ class _ProfilePageState extends State<ProfilePage> {
               : DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
+      helpText: 'Pilih Tanggal Lahir',
+      cancelText: 'Batal',
+      confirmText: 'Pilih',
+      builder: (context, child) => Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: BaseColors.info.shade600,
+            onPrimary: Colors.white,
+            onSurface: Colors.black,
+            surface: Colors.white,
+          ),
+          dialogBackgroundColor: Colors.white,
+        ),
+        child: child!,
+      ),
     );
     if (picked != null) {
       _dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(picked);
@@ -431,13 +447,80 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Relation Section (for clients)
+                // Relationship Management Button
                 BlocBuilder<RelationshipCubit, RelationshipState>(
                   builder: (context, relationshipState) {
                     final roles = SharedPreferencesService.getStringList(
                       PreferencesKeys.roles,
                     );
-                    final isClient = roles != null && roles.contains('CLIENT');
+                    final isClient = roles != null &&
+                        (roles.contains('CLIENT') || roles.contains('ROLE_CLIENT'));
+                    final isCaregiver = roles != null &&
+                        (roles.contains('CAREGIVER') || roles.contains('ROLE_CAREGIVER'));
+
+                    if (!isClient && !isCaregiver) {
+                      return const SizedBox.shrink();
+                    }
+
+                    return Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: BaseColors.borderLight,
+                          width: 1.5,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Kelola Relasi', style: FontTheme.bodyBold),
+                              Icon(
+                                PhosphorIcons.users(),
+                                size: 20,
+                                color: BaseColors.info,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            isClient
+                                ? 'Kelola hubungan dengan caregiver Anda'
+                                : 'Kelola hubungan dengan klien Anda',
+                            style: FontTheme.textRegular.copyWith(
+                              color: BaseColors.textSecondary,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            width: double.infinity,
+                            child: TemaniButton(
+                              type: 3,
+                              text: 'Buka Kelola Relasi',
+                              onPressed: () {
+                                router.push('/relationship');
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 20),
+                // Relation Section (for clients) - Keep existing relation display
+                BlocBuilder<RelationshipCubit, RelationshipState>(
+                  builder: (context, relationshipState) {
+                    final roles = SharedPreferencesService.getStringList(
+                      PreferencesKeys.roles,
+                    );
+                    final isClient = roles != null &&
+                        (roles.contains('CLIENT') || roles.contains('ROLE_CLIENT'));
 
                     if (!isClient) {
                       return const SizedBox.shrink();
@@ -498,6 +581,125 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     );
                   },
+                ),
+                const SizedBox(height: 20),
+                // Logout Button
+                SizedBox(
+                  width: double.infinity,
+                  child: TemaniButton(
+                    type: 2, // Secondary button style
+                    text: 'Logout',
+                    onPressed: () async {
+                    // Show confirmation dialog
+                    final shouldLogout = await showDialog<bool>(
+                      context: context,
+                      barrierColor: Colors.black.withOpacity(0.5),
+                      builder: (context) => Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        backgroundColor: Colors.white,
+                        child: Container(
+                          padding: const EdgeInsets.all(24),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Icon
+                              Container(
+                                width: 64,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  color: BaseColors.error.shade50,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  PhosphorIcons.signOut(),
+                                  size: 32,
+                                  color: BaseColors.error.shade600,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              // Title
+                              Text(
+                                'Logout',
+                                style: FontTheme.bodyBold.copyWith(
+                                  fontSize: 20,
+                                  color: BaseColors.textPrimary,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              // Message
+                              Text(
+                                'Apakah Anda yakin ingin keluar?',
+                                textAlign: TextAlign.center,
+                                style: FontTheme.textRegular.copyWith(
+                                  color: BaseColors.textSecondary,
+                                ),
+                              ),
+                              const SizedBox(height: 24),
+                              // Buttons
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: OutlinedButton(
+                                      onPressed: () => Navigator.of(context).pop(false),
+                                      style: OutlinedButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(vertical: 14),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(16),
+                                        ),
+                                        side: BorderSide(
+                                          color: BaseColors.borderMedium,
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Batal',
+                                        style: FontTheme.textSemiBold.copyWith(
+                                          color: BaseColors.textSecondary,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () => Navigator.of(context).pop(true),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: BaseColors.error.shade600,
+                                        padding: const EdgeInsets.symmetric(vertical: 14),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(16),
+                                        ),
+                                        elevation: 0,
+                                      ),
+                                      child: Text(
+                                        'Logout',
+                                        style: FontTheme.textSemiBold.copyWith(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+
+                    if (shouldLogout == true) {
+                      // Clear credentials
+                      await SharedPreferencesService.removeCreds();
+                      
+                      // Navigate to login page
+                      if (mounted) {
+                        router.go('/');
+                      }
+                    }
+                  },
+                  ),
                 ),
                 const SizedBox(height: 20),
               ],

@@ -16,4 +16,8 @@ abstract class MoodRepository {
   });
   Future<Either<Failure, void>> deleteMoodLog(String id);
   Future<Either<Failure, MoodSummary>> getMoodSummary({String? weekStart});
+  Future<Either<Failure, MoodSummary>> getMoodSummaryByUserId(
+    String userId, {
+    String? weekStart,
+  });
 }

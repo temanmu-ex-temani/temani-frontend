@@ -22,6 +22,10 @@ abstract class MoodRemoteDataSource {
   Future<Either<Failure, MoodSummaryResponse>> getMoodSummary({
     String? weekStart,
   });
+  Future<Either<Failure, MoodSummaryResponse>> getMoodSummaryByUserId(
+    String userId, {
+    String? weekStart,
+  });
 }
 
 @Injectable(as: MoodRemoteDataSource)
@@ -99,6 +103,24 @@ class MoodRemoteDataSourceImpl implements MoodRemoteDataSource {
     return await apiCall<MoodSummaryResponse>(
       getIt<Map<String, dynamic>>(
         EndPoints.moodSummary,
+        queryParameters: queryParams,
+      ).then((response) => MoodSummaryResponse.fromJson(response.data!)),
+    );
+  }
+
+  @override
+  Future<Either<Failure, MoodSummaryResponse>> getMoodSummaryByUserId(
+    String userId, {
+    String? weekStart,
+  }) async {
+    final queryParams = <String, dynamic>{};
+    if (weekStart != null) {
+      queryParams['weekStart'] = weekStart;
+    }
+
+    return await apiCall<MoodSummaryResponse>(
+      getIt<Map<String, dynamic>>(
+        EndPoints.moodSummaryByUser(userId),
         queryParameters: queryParams,
       ).then((response) => MoodSummaryResponse.fromJson(response.data!)),
     );

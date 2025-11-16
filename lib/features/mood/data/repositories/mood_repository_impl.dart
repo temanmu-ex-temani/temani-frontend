@@ -73,4 +73,19 @@ class MoodRepositoryImpl implements MoodRepository {
       (response) => Right(response.data),
     );
   }
+
+  @override
+  Future<Either<Failure, MoodSummary>> getMoodSummaryByUserId(
+    String userId, {
+    String? weekStart,
+  }) async {
+    final result = await _remoteDataSource.getMoodSummaryByUserId(
+      userId,
+      weekStart: weekStart,
+    );
+    return result.fold(
+      (failure) => Left(failure),
+      (response) => Right(response.data),
+    );
+  }
 }

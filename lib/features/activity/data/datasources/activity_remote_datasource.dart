@@ -9,6 +9,7 @@ import 'package:temani_frontend/features/activity/data/models/activity_model.dar
 abstract class ActivityRemoteDataSource {
   Future<Either<Failure, ActivityListResponse>> getAllActivities();
   Future<Either<Failure, ActivityListResponse>> getActivitiesByFeature(String feature);
+  Future<Either<Failure, ActivityListResponse>> getActivitiesByUserId(String userId);
   Future<Either<Failure, ActivityListResponse>> createTestActivity();
 }
 
@@ -32,6 +33,15 @@ class ActivityRemoteDataSourceImpl implements ActivityRemoteDataSource {
     return await apiCall<ActivityListResponse>(
       getIt<Map<String, dynamic>>(
         EndPoints.interactionLogsByFeature(feature),
+      ).then((response) => ActivityListResponse.fromJson(response.data!)),
+    );
+  }
+
+  @override
+  Future<Either<Failure, ActivityListResponse>> getActivitiesByUserId(String userId) async {
+    return await apiCall<ActivityListResponse>(
+      getIt<Map<String, dynamic>>(
+        EndPoints.interactionLogsByUser(userId),
       ).then((response) => ActivityListResponse.fromJson(response.data!)),
     );
   }

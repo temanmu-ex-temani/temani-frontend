@@ -8,6 +8,10 @@ class EndPoints {
   static const String counselingSchedulesAvailable =
       '$baseUrl/counseling-schedules/available';
   static const String counselingSchedules = '$baseUrl/counseling-schedules';
+  static const String counselingSchedulesPeer =
+      '$baseUrl/counseling-schedules/peer';
+  static String counselingScheduleStatus(String scheduleId) =>
+      '$baseUrl/counseling-schedules/$scheduleId/status';
 
   // Payment Endpoints
   static const String paymentCreate = '$baseUrl/payments/create';
@@ -20,12 +24,16 @@ class EndPoints {
   static const String interactionLogs = '$baseUrl/interaction-logs';
   static String interactionLogsByFeature(String feature) =>
       '$baseUrl/interaction-logs/feature/$feature';
+  static String interactionLogsByUser(String userId) =>
+      '$baseUrl/interaction-logs/user/$userId';
   static const String interactionLogsTest = '$baseUrl/interaction-logs/test';
 
   // Mood Logs Endpoints
   static const String moodLogs = '$baseUrl/mood-logs';
   static String moodLogById(String id) => '$baseUrl/mood-logs/$id';
   static const String moodSummary = '$baseUrl/mood-logs/summary';
+  static String moodSummaryByUser(String userId) =>
+      '$baseUrl/mood-logs/summary/user/$userId';
 
   // Profile Endpoints
   static const String profileMe = '$baseUrl/profiles/me';

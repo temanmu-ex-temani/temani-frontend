@@ -6,7 +6,31 @@ import 'package:temani_frontend/services/router_service.dart';
 
 class CounselingDetailsBottomSheet extends StatelessWidget {
   final String status; // 'Terjadwal', 'Berlangsung', 'Selesai', 'Dibatalkan'
-  const CounselingDetailsBottomSheet({super.key, required this.status});
+  final String title;
+  final String counselorName;
+  final String? clientName;
+  final String date;
+  final String time;
+  final String? description;
+  final String? meetingLink;
+  final String? notes;
+  final String id;
+  final bool showClientName;
+  
+  const CounselingDetailsBottomSheet({
+    super.key,
+    required this.status,
+    required this.title,
+    required this.counselorName,
+    this.clientName,
+    required this.date,
+    required this.time,
+    this.description,
+    this.meetingLink,
+    this.notes,
+    required this.id,
+    this.showClientName = false,
+  });
 
   Color getStatusColor() {
     switch (status) {
@@ -85,7 +109,22 @@ class CounselingDetailsBottomSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 18),
-          Text('Konselor', style: FontTheme.textMedium),
+          Text('Judul Sesi', style: FontTheme.textMedium),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: BaseColors.borderLight),
+            ),
+            child: Text(
+              title,
+              style: FontTheme.textMedium,
+            ),
+          ),
+          const SizedBox(height: 18),
+          Text(showClientName ? 'Klien' : 'Konselor', style: FontTheme.textMedium),
           const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.all(12),
@@ -110,23 +149,12 @@ class CounselingDetailsBottomSheet extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Chika', style: FontTheme.textMedium),
-                      const SizedBox(height: 2),
-                      Row(
-                        children: [
-                          ...List.generate(
-                            5,
-                            (i) => Icon(
-                              Icons.star,
-                              color: Color(0xFFFFA800),
-                              size: 16,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Text('4.9', style: FontTheme.captionRegular),
-                        ],
+                      Text(
+                        showClientName 
+                            ? (clientName ?? '-') 
+                            : counselorName,
+                        style: FontTheme.textMedium,
                       ),
-                      Text('500+ Reviews', style: FontTheme.captionRegular),
                     ],
                   ),
                 ),
@@ -136,40 +164,93 @@ class CounselingDetailsBottomSheet extends StatelessWidget {
           const SizedBox(height: 18),
           Text('Detail sesi', style: FontTheme.textMedium),
           const SizedBox(height: 8),
-          Row(
-            children: [
-              Icon(
-                PhosphorIcons.user(),
-                size: 18,
-                color: BaseColors.textSecondary,
-              ),
-              const SizedBox(width: 8),
-              Text('ID: UXBCY-JDKSD-B73OM', style: FontTheme.captionRegular),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              Icon(
-                PhosphorIcons.calendarBlank(),
-                size: 18,
-                color: BaseColors.textSecondary,
-              ),
-              const SizedBox(width: 8),
-              Text('Rabu, 2 Juli 2025', style: FontTheme.captionRegular),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              Icon(
-                PhosphorIcons.clock(),
-                size: 18,
-                color: BaseColors.textSecondary,
-              ),
-              const SizedBox(width: 8),
-              Text('20:00 - 21:00', style: FontTheme.captionRegular),
-            ],
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: BaseColors.borderLight),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      PhosphorIcons.calendarBlank(),
+                      size: 18,
+                      color: BaseColors.textSecondary,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(date, style: FontTheme.captionRegular),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(
+                      PhosphorIcons.clock(),
+                      size: 18,
+                      color: BaseColors.textSecondary,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(time, style: FontTheme.captionRegular),
+                  ],
+                ),
+                if (description != null && description!.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    'Deskripsi:',
+                    style: FontTheme.captionMedium.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    description!,
+                    style: FontTheme.captionRegular,
+                  ),
+                ],
+                if (meetingLink != null && meetingLink!.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(
+                        PhosphorIcons.link(),
+                        size: 18,
+                        color: BaseColors.textSecondary,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          meetingLink!,
+                          style: FontTheme.captionRegular.copyWith(
+                            color: BaseColors.info.shade600,
+                            decoration: TextDecoration.underline,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+                if (notes != null && notes!.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    'Catatan:',
+                    style: FontTheme.captionMedium.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    notes!,
+                    style: FontTheme.captionRegular,
+                  ),
+                ],
+              ],
+            ),
           ),
           const SizedBox(height: 22),
           _buildButtonSection(context),
@@ -201,11 +282,7 @@ class CounselingDetailsBottomSheet extends StatelessWidget {
           ],
         );
       case 'Selesai':
-        return Row(
-          children: [
-            Expanded(child: TemaniButton(type: 1, text: 'Beri Ulasan')),
-          ],
-        );
+        return SizedBox.shrink();
       case 'Dibatalkan':
         return SizedBox.shrink();
       default:
@@ -214,56 +291,3 @@ class CounselingDetailsBottomSheet extends StatelessWidget {
   }
 }
 
-class _PrimaryButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  const _PrimaryButton({required this.text, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 44,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: BaseColors.info.shade100,
-          foregroundColor: BaseColors.info.shade700,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          elevation: 0,
-        ),
-        onPressed: onPressed,
-        child: Text(text, style: FontTheme.textMedium),
-      ),
-    );
-  }
-}
-
-class _SecondaryButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  const _SecondaryButton({required this.text, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 44,
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: BaseColors.error.shade400,
-          side: BorderSide(color: BaseColors.error.shade100),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: FontTheme.textMedium.copyWith(
-            color: BaseColors.error.shade400,
-          ),
-        ),
-      ),
-    );
-  }
-}
