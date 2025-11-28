@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/bases/widgets/temanmu_button.dart';
 import 'package:temanmu/core/constants/_constants.dart';
 import 'package:temanmu/core/themes/_themes.dart';
 import 'package:temanmu/features/counseling/presentation/cubit/counseling_sessions_cubit.dart';
@@ -302,7 +302,7 @@ class CounselingSessionCard extends StatelessWidget {
                     if (canJoin)
                       SizedBox(
                         width: double.infinity,
-                        child: TemaniButton(
+                        child: TemanMuButton(
                           type: 3,
                           text: 'Gabung',
                           onPressed: () => _navigateToChatRoom(),
@@ -313,7 +313,7 @@ class CounselingSessionCard extends StatelessWidget {
                     if (status == 'Selesai' || showConsultationButton)
                       SizedBox(
                         width: double.infinity,
-                        child: TemaniButton(
+                        child: TemanMuButton(
                           type: 3,
                           text: 'Konsultasi Saya',
                           onPressed: () => _navigateToChatHistory(),
@@ -394,7 +394,7 @@ class _ConditionalMulaiSesiButton extends StatelessWidget {
       // If cubit is found, render the button (no need for BlocBuilder since we don't need to rebuild)
       return SizedBox(
         width: double.infinity,
-        child: TemaniButton(
+        child: TemanMuButton(
           type: 3,
           text: 'Mulai Sesi',
           onPressed: () async {
@@ -435,7 +435,7 @@ class _ConditionalBatalkanSesiButton extends StatelessWidget {
       // If cubit is found, render the button
       return SizedBox(
         width: double.infinity,
-        child: TemaniButton(
+        child: TemanMuButton(
           type: 2, // Use type 2 for secondary/cancel button style
           text: 'Batalkan Sesi',
           onPressed: () async {
@@ -458,7 +458,7 @@ class _ConditionalBatalkanSesiButton extends StatelessWidget {
         final cubit = get<CounselingSessionsCubit>();
         return SizedBox(
           width: double.infinity,
-          child: TemaniButton(
+          child: TemanMuButton(
             type: 2, // Use type 2 for secondary/cancel button style
             text: 'Batalkan Sesi',
             onPressed: () async {

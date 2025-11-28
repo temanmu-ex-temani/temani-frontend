@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/bases/widgets/temanmu_button.dart';
 import 'package:temanmu/core/themes/_themes.dart';
 import 'package:temanmu/features/todo/domain/entities/todo_list.dart';
 import 'package:temanmu/features/todo/presentation/cubit/todo_cubit.dart';
@@ -51,7 +51,7 @@ class _TodoPageState extends State<TodoPage> {
               const SizedBox(height: 8),
               SizedBox(
                 width: double.infinity,
-                child: TemaniButton(
+                child: TemanMuButton(
                   type: 3,
                   text: 'Buat Kelompok',
                   onPressed: () => _showCreateListSheet(context),
@@ -178,7 +178,7 @@ class _TodoPageState extends State<TodoPage> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  TemaniButton(
+                  TemanMuButton(
                     type: 3,
                     text: 'Simpan',
                     onPressed: () {
@@ -260,7 +260,7 @@ class _TodoPageState extends State<TodoPage> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  TemaniButton(
+                  TemanMuButton(
                     type: 3,
                     text: 'Perbarui',
                     onPressed: () {
@@ -322,7 +322,7 @@ class _TodoPageState extends State<TodoPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              TemaniButton(
+              TemanMuButton(
                 type: 3,
                 text: 'Tambahkan',
                 onPressed: () {
@@ -381,7 +381,7 @@ class _TodoPageState extends State<TodoPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              TemaniButton(
+              TemanMuButton(
                 type: 3,
                 text: 'Perbarui',
                 onPressed: () {
@@ -618,7 +618,7 @@ class _TodoListCard extends StatelessWidget {
               },
             ),
           const SizedBox(height: 12),
-          TemaniButton(type: 3, text: 'Tambah Item', onPressed: onAddItem),
+          TemanMuButton(type: 3, text: 'Tambah Item', onPressed: onAddItem),
         ],
       ),
     );
@@ -655,7 +655,7 @@ class _EmptyState extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          TemaniButton(type: 3, text: 'Buat Kelompok', onPressed: onCreate),
+          TemanMuButton(type: 3, text: 'Buat Kelompok', onPressed: onCreate),
         ],
       ),
     );
@@ -690,7 +690,7 @@ class _ErrorState extends StatelessWidget {
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
-            child: TemaniButton(type: 3, text: 'Coba Lagi', onPressed: onRetry),
+            child: TemanMuButton(type: 3, text: 'Coba Lagi', onPressed: onRetry),
           ),
         ],
       ),

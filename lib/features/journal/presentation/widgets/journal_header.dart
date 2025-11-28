@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/bases/widgets/temanmu_button.dart';
 import 'package:temanmu/core/themes/_themes.dart';
 
 class JournalHeader extends StatelessWidget {
@@ -39,7 +39,7 @@ class JournalHeader extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(24),
               ),
-              child: TemaniButton(
+              child: TemanMuButton(
                 type: 3,
                 text: 'Tulis jurnal',
                 onPressed: onCreateJournal,

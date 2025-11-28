@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/bases/widgets/temanmu_button.dart';
 import 'package:temanmu/core/themes/_themes.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temanmu/services/router_service.dart';
@@ -265,7 +265,7 @@ class CounselingDetailsBottomSheet extends StatelessWidget {
         return Row(
           children: [
             Expanded(
-              child: TemaniButton(
+              child: TemanMuButton(
                 type: 3,
                 text: 'Gabung Sesi',
                 onPressed: () => router.push('/chat'),
@@ -276,9 +276,9 @@ class CounselingDetailsBottomSheet extends StatelessWidget {
       case 'Terjadwal':
         return Row(
           children: [
-            Expanded(child: TemaniButton(type: 1, text: 'Ubah Jadwal')),
+            Expanded(child: TemanMuButton(type: 1, text: 'Ubah Jadwal')),
             const SizedBox(width: 12),
-            Expanded(child: TemaniButton(type: 2, text: 'Batalkan')),
+            Expanded(child: TemanMuButton(type: 2, text: 'Batalkan')),
           ],
         );
       case 'Selesai':

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/bases/widgets/temanmu_button.dart';
 import 'package:temanmu/core/constants/_constants.dart';
 import 'package:temanmu/core/themes/_themes.dart';
 import 'package:temanmu/features/relationship/domain/entities/relationship.dart';
@@ -639,7 +639,7 @@ class _RelationshipPageState extends State<RelationshipPage>
               const SizedBox(width: 12),
               Expanded(
                 flex: 2,
-                child: TemaniButton(
+                child: TemanMuButton(
                   type: 3,
                   text: 'Terima',
                   onPressed: () => _acceptRelationship(relationship.id),
@@ -717,7 +717,7 @@ class _RelationshipPageState extends State<RelationshipPage>
             ),
           ),
           if (canSendRequest)
-            TemaniButton(
+            TemanMuButton(
               type: 3,
               text: 'Kirim',
               onPressed: () => _createRelationship(potential.userId),

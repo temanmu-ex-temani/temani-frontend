@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/bases/widgets/temanmu_button.dart';
 import 'package:temanmu/core/themes/_themes.dart';
 import 'package:temanmu/features/todo/presentation/cubit/todo_cubit.dart';
 
@@ -93,7 +93,7 @@ class _CreateTodoPageState extends State<CreateTodoPage> {
                       state.status != TodoStatus.loading;
                   return SizedBox(
                     width: double.infinity,
-                    child: TemaniButton(
+                    child: TemanMuButton(
                       type: 3,
                       text: isLoading ? 'Menyimpan...' : 'Simpan',
                       onPressed: isLoading ? null : _onSave,

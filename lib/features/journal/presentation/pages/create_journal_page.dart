@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/bases/widgets/temanmu_button.dart';
 import 'package:temanmu/core/themes/_themes.dart';
 import 'package:temanmu/features/journal/presentation/cubit/journal_cubit.dart';
 import 'package:temanmu/services/depedencies/di.dart';
@@ -104,7 +104,7 @@ class _CreateJournalPageState extends State<CreateJournalPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: TemaniButton(
+                          child: TemanMuButton(
                             type: 3,
                             text: _isLoading ? 'Menyimpan...' : 'Simpan',
                             onPressed: _isLoading ? null : _saveJournal,

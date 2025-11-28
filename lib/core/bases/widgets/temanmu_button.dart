@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:temanmu/core/themes/_themes.dart';
 
-class TemaniButton extends StatelessWidget {
-  const TemaniButton({
+class TemanMuButton extends StatelessWidget {
+  const TemanMuButton({
     required this.type,
     required this.text,
     this.onPressed,

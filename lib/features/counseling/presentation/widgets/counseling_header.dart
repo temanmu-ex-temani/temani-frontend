@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/bases/widgets/temanmu_button.dart';
 import 'package:temanmu/core/constants/_constants.dart';
 import 'package:temanmu/core/themes/_themes.dart';
 import 'package:temanmu/services/router_service.dart';
@@ -53,7 +53,7 @@ class CounselingHeader extends StatelessWidget {
           const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
-            child: TemaniButton(
+            child: TemanMuButton(
               type: 3,
               text: "Buat Jadwal",
               onPressed: () {

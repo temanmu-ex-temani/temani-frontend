@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/bases/widgets/temanmu_button.dart';
 import 'package:temanmu/core/constants/_constants.dart';
 import 'package:temanmu/core/themes/_themes.dart';
 import 'package:temanmu/features/profile/domain/entities/profile.dart';
@@ -428,7 +428,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             const SizedBox(width: 12),
                             Expanded(
                               flex: 2,
-                              child: TemaniButton(
+                              child: TemanMuButton(
                                 type: 3,
                                 text:
                                     state.status == ProfileStatus.saving
@@ -499,7 +499,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           const SizedBox(height: 16),
                           SizedBox(
                             width: double.infinity,
-                            child: TemaniButton(
+                            child: TemanMuButton(
                               type: 3,
                               text: 'Buka Kelola Relasi',
                               onPressed: () {
@@ -586,7 +586,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 // Logout Button
                 SizedBox(
                   width: double.infinity,
-                  child: TemaniButton(
+                  child: TemanMuButton(
                     type: 2, // Secondary button style
                     text: 'Logout',
                     onPressed: () async {
