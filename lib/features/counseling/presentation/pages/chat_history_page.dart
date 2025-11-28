@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/constants/_constants.dart';
-import 'package:temani_frontend/services/shared_preference_service.dart';
-import 'package:temani_frontend/core/client/_client.dart';
+import 'package:temanmu/core/constants/_constants.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
+import 'package:temanmu/core/client/_client.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 

@@ -1,4 +1,4 @@
-package com.example.temani_frontend
+package com.temanmu.app
 
 import io.flutter.embedding.android.FlutterActivity
 

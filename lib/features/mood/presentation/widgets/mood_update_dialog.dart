@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/mood/domain/entities/mood_log.dart';
-import 'package:temani_frontend/features/mood/presentation/cubit/mood_cubit.dart';
-import 'package:temani_frontend/features/mood/presentation/widgets/mood_button_real.dart';
-import 'package:temani_frontend/services/toast_service.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/mood/domain/entities/mood_log.dart';
+import 'package:temanmu/features/mood/presentation/cubit/mood_cubit.dart';
+import 'package:temanmu/features/mood/presentation/widgets/mood_button_real.dart';
+import 'package:temanmu/services/toast_service.dart';
 
 class MoodUpdateDialog extends StatefulWidget {
   final MoodLog currentMood;

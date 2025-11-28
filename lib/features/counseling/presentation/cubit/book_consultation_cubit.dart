@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/counseling_schedule.dart';
-import 'package:temani_frontend/features/counseling/domain/repositories/counseling_schedule_repository.dart';
-import 'package:temani_frontend/features/counseling/presentation/cubit/book_consultation_state.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/counseling/domain/entities/counseling_schedule.dart';
+import 'package:temanmu/features/counseling/domain/repositories/counseling_schedule_repository.dart';
+import 'package:temanmu/features/counseling/presentation/cubit/book_consultation_state.dart';
 
 @injectable
 class BookConsultationCubit extends Cubit<BookConsultationState> {

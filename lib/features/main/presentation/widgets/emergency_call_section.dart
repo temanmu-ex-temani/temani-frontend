@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
+import 'package:temanmu/core/themes/_themes.dart';
 
 class EmergencyCallSection extends StatelessWidget {
   const EmergencyCallSection({super.key});

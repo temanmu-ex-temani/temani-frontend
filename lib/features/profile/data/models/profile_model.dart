@@ -1,4 +1,4 @@
-import 'package:temani_frontend/features/profile/domain/entities/profile.dart';
+import 'package:temanmu/features/profile/domain/entities/profile.dart';
 
 class ProfileModel extends Profile {
   ProfileModel({

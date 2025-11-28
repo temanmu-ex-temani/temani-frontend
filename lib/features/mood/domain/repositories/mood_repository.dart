@@ -1,7 +1,7 @@
 import 'package:either_dart/either.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/mood/domain/entities/mood_log.dart';
-import 'package:temani_frontend/features/mood/domain/entities/mood_summary.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/mood/domain/entities/mood_log.dart';
+import 'package:temanmu/features/mood/domain/entities/mood_summary.dart';
 
 abstract class MoodRepository {
   Future<Either<Failure, List<MoodLog>>> getAllMoodLogs();

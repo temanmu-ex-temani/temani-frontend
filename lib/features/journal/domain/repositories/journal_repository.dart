@@ -1,6 +1,6 @@
 import 'package:either_dart/either.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/journal/domain/entities/journal.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/journal/domain/entities/journal.dart';
 
 abstract class JournalRepository {
   Future<Either<Failure, List<Journal>>> getAllJournals();

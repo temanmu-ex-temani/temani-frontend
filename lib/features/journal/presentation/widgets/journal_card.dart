@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/journal/domain/entities/journal.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/journal/domain/entities/journal.dart';
 
 class JournalCard extends StatelessWidget {
   final Journal journal;

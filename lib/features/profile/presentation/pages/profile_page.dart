@@ -5,17 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
-import 'package:temani_frontend/core/constants/_constants.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/profile/domain/entities/profile.dart';
-import 'package:temani_frontend/features/profile/presentation/cubit/profile_cubit.dart';
-import 'package:temani_frontend/features/relationship/presentation/cubit/relationship_cubit.dart';
-import 'package:temani_frontend/features/relationship/domain/entities/relationship.dart'
+import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/constants/_constants.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/profile/domain/entities/profile.dart';
+import 'package:temanmu/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:temanmu/features/relationship/presentation/cubit/relationship_cubit.dart';
+import 'package:temanmu/features/relationship/domain/entities/relationship.dart'
     as relationship_entity;
-import 'package:temani_frontend/services/shared_preference_service.dart';
-import 'package:temani_frontend/services/toast_service.dart';
-import 'package:temani_frontend/services/router_service.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
+import 'package:temanmu/services/toast_service.dart';
+import 'package:temanmu/services/router_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

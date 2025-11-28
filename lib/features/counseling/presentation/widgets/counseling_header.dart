@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
-import 'package:temani_frontend/core/constants/_constants.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/services/router_service.dart';
-import 'package:temani_frontend/services/shared_preference_service.dart';
+import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/constants/_constants.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/services/router_service.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
 
 class CounselingHeader extends StatelessWidget {
   final VoidCallback? onCreateSchedulePressed;

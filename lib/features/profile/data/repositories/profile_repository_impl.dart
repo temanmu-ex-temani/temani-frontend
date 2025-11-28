@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/profile/data/datasources/profile_remote_datasource.dart';
-import 'package:temani_frontend/features/profile/data/models/profile_model.dart';
-import 'package:temani_frontend/features/profile/domain/entities/profile.dart';
-import 'package:temani_frontend/features/profile/domain/repositories/profile_repository.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/profile/data/datasources/profile_remote_datasource.dart';
+import 'package:temanmu/features/profile/data/models/profile_model.dart';
+import 'package:temanmu/features/profile/domain/entities/profile.dart';
+import 'package:temanmu/features/profile/domain/repositories/profile_repository.dart';
 
 @Injectable(as: ProfileRepository)
 class ProfileRepositoryImpl implements ProfileRepository {

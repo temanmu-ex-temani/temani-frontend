@@ -1,4 +1,4 @@
-import 'package:temani_frontend/features/relationship/domain/entities/relationship.dart';
+import 'package:temanmu/features/relationship/domain/entities/relationship.dart';
 
 class RelationshipModel extends Relationship {
   RelationshipModel({

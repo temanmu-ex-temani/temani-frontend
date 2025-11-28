@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/features/activity/presentation/widgets/activity_header.dart';
-import 'package:temani_frontend/features/activity/presentation/widgets/activity_history_list.dart';
-import 'package:temani_frontend/features/activity/presentation/widgets/activity_filter_buttons.dart';
-import 'package:temani_frontend/features/activity/presentation/widgets/mood_summary_real.dart';
-import 'package:temani_frontend/features/activity/presentation/cubit/activity_cubit.dart';
-import 'package:temani_frontend/features/mood/presentation/cubit/mood_cubit.dart';
+import 'package:temanmu/features/activity/presentation/widgets/activity_header.dart';
+import 'package:temanmu/features/activity/presentation/widgets/activity_history_list.dart';
+import 'package:temanmu/features/activity/presentation/widgets/activity_filter_buttons.dart';
+import 'package:temanmu/features/activity/presentation/widgets/mood_summary_real.dart';
+import 'package:temanmu/features/activity/presentation/cubit/activity_cubit.dart';
+import 'package:temanmu/features/mood/presentation/cubit/mood_cubit.dart';
 import 'package:get_it/get_it.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
+import 'package:temanmu/core/themes/_themes.dart';
 
 class ActivityPage extends StatefulWidget {
   const ActivityPage({super.key});

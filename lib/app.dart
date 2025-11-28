@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:temani_frontend/features/counseling/presentation/pages/counseling_page.dart';
+import 'package:temanmu/features/counseling/presentation/pages/counseling_page.dart';
 import 'services/router_service.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temani_frontend/features/main/presentation/pages/home_page.dart';
-import 'package:temani_frontend/features/main/presentation/pages/peer_home_page.dart';
-import 'package:temani_frontend/features/main/presentation/pages/caregiver_home_page.dart';
-import 'package:temani_frontend/features/activity/presentation/pages/activity_page.dart';
-import 'package:temani_frontend/features/relationship/presentation/pages/relationship_page.dart';
-import 'package:temani_frontend/features/profile/presentation/pages/profile_page.dart';
-import 'package:temani_frontend/features/profile/presentation/cubit/profile_cubit.dart';
-import 'package:temani_frontend/features/relationship/presentation/cubit/relationship_cubit.dart';
-import 'package:temani_frontend/features/main/presentation/cubit/upcoming_sessions_cubit.dart';
+import 'package:temanmu/features/main/presentation/pages/home_page.dart';
+import 'package:temanmu/features/main/presentation/pages/peer_home_page.dart';
+import 'package:temanmu/features/main/presentation/pages/caregiver_home_page.dart';
+import 'package:temanmu/features/activity/presentation/pages/activity_page.dart';
+import 'package:temanmu/features/relationship/presentation/pages/relationship_page.dart';
+import 'package:temanmu/features/profile/presentation/pages/profile_page.dart';
+import 'package:temanmu/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:temanmu/features/relationship/presentation/cubit/relationship_cubit.dart';
+import 'package:temanmu/features/main/presentation/cubit/upcoming_sessions_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
-import 'package:temani_frontend/services/shared_preference_service.dart';
-import 'package:temani_frontend/core/constants/_constants.dart';
+import 'package:temanmu/services/depedencies/di.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
+import 'package:temanmu/core/constants/_constants.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

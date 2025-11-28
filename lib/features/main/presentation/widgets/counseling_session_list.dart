@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/counseling_schedule.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/counseling_session_card.dart';
+import 'package:temanmu/features/counseling/domain/entities/counseling_schedule.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/counseling_session_card.dart';
 
 class CounselingSessionList extends StatelessWidget {
   final List<CounselingSchedule> sessions;

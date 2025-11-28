@@ -2,9 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
-import 'package:temani_frontend/features/mood/domain/entities/mood_log.dart';
-import 'package:temani_frontend/features/mood/domain/entities/mood_summary.dart';
-import 'package:temani_frontend/features/mood/domain/repositories/mood_repository.dart';
+import 'package:temanmu/features/mood/domain/entities/mood_log.dart';
+import 'package:temanmu/features/mood/domain/entities/mood_summary.dart';
+import 'package:temanmu/features/mood/domain/repositories/mood_repository.dart';
 
 part 'mood_state.dart';
 

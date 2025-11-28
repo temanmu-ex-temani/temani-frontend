@@ -1,9 +1,9 @@
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/todo/data/datasources/todo_remote_datasource.dart';
-import 'package:temani_frontend/features/todo/domain/entities/todo_list.dart';
-import 'package:temani_frontend/features/todo/domain/repositories/todo_repository.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/todo/data/datasources/todo_remote_datasource.dart';
+import 'package:temanmu/features/todo/domain/entities/todo_list.dart';
+import 'package:temanmu/features/todo/domain/repositories/todo_repository.dart';
 
 @Injectable(as: TodoRepository)
 class TodoRepositoryImpl implements TodoRepository {

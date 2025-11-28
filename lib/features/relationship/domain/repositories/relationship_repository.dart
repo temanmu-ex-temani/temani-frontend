@@ -1,6 +1,6 @@
 import 'package:either_dart/either.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/relationship/domain/entities/relationship.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/relationship/domain/entities/relationship.dart';
 
 abstract class RelationshipRepository {
   Future<Either<Failure, Relationship>> createRelationship(String targetId);

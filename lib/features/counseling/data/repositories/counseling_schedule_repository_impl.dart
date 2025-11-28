@@ -1,10 +1,10 @@
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/counseling/data/datasources/counseling_schedule_remote_datasource.dart';
-import 'package:temani_frontend/features/counseling/data/models/counseling_schedule_model.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/counseling_schedule.dart';
-import 'package:temani_frontend/features/counseling/domain/repositories/counseling_schedule_repository.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/counseling/data/datasources/counseling_schedule_remote_datasource.dart';
+import 'package:temanmu/features/counseling/data/models/counseling_schedule_model.dart';
+import 'package:temanmu/features/counseling/domain/entities/counseling_schedule.dart';
+import 'package:temanmu/features/counseling/domain/repositories/counseling_schedule_repository.dart';
 
 @Injectable(as: CounselingScheduleRepository)
 class CounselingScheduleRepositoryImpl implements CounselingScheduleRepository {

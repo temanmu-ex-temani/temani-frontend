@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/app.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
-import 'package:temani_frontend/services/shared_preference_service.dart';
+import 'package:temanmu/app.dart';
+import 'package:temanmu/services/depedencies/di.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {

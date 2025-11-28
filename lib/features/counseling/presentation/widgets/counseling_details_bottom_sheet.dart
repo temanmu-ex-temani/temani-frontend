@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
+import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/themes/_themes.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temani_frontend/services/router_service.dart';
+import 'package:temanmu/services/router_service.dart';
 
 class CounselingDetailsBottomSheet extends StatelessWidget {
   final String status; // 'Terjadwal', 'Berlangsung', 'Selesai', 'Dibatalkan'

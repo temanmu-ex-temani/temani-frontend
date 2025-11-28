@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/mood/presentation/cubit/mood_cubit.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/mood/presentation/cubit/mood_cubit.dart';
 
 class MoodHistoryCard extends StatelessWidget {
   const MoodHistoryCard({super.key});

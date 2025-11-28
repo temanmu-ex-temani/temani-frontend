@@ -2,9 +2,9 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:equatable/equatable.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/activity/domain/entities/activity.dart';
-import 'package:temani_frontend/features/activity/domain/repositories/activity_repository.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/activity/domain/entities/activity.dart';
+import 'package:temanmu/features/activity/domain/repositories/activity_repository.dart';
 
 part 'activity_state.dart';
 

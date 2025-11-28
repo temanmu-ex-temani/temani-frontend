@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/client/_client.dart';
-import 'package:temani_frontend/services/router_service.dart';
-import 'package:temani_frontend/services/shared_preference_service.dart';
+import 'package:temanmu/core/client/_client.dart';
+import 'package:temanmu/services/router_service.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
 import 'dart:convert';
-import 'package:temani_frontend/core/constants/_constants.dart';
-import 'package:temani_frontend/services/toast_service.dart';
+import 'package:temanmu/core/constants/_constants.dart';
+import 'package:temanmu/services/toast_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

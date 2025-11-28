@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/counseling_schedule.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/payment_header.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/payment_selected_session_card.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/payment_summary.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/payment_pay_button.dart';
-import 'package:temani_frontend/features/counseling/domain/repositories/payment_repository.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/payment.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/payment_request.dart';
-import 'package:temani_frontend/features/counseling/presentation/pages/midtrans_webview_page.dart';
-import 'package:temani_frontend/services/router_service.dart';
+import 'package:temanmu/features/counseling/domain/entities/counseling_schedule.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/payment_header.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/payment_selected_session_card.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/payment_summary.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/payment_pay_button.dart';
+import 'package:temanmu/features/counseling/domain/repositories/payment_repository.dart';
+import 'package:temanmu/features/counseling/domain/entities/payment.dart';
+import 'package:temanmu/features/counseling/domain/entities/payment_request.dart';
+import 'package:temanmu/features/counseling/presentation/pages/midtrans_webview_page.dart';
+import 'package:temanmu/services/router_service.dart';
 import 'package:get_it/get_it.dart';
-import 'package:temani_frontend/services/toast_service.dart';
+import 'package:temanmu/services/toast_service.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});

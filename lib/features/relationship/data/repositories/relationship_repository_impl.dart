@@ -1,9 +1,9 @@
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/relationship/data/datasources/relationship_remote_datasource.dart';
-import 'package:temani_frontend/features/relationship/domain/entities/relationship.dart';
-import 'package:temani_frontend/features/relationship/domain/repositories/relationship_repository.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/relationship/data/datasources/relationship_remote_datasource.dart';
+import 'package:temanmu/features/relationship/domain/entities/relationship.dart';
+import 'package:temanmu/features/relationship/domain/repositories/relationship_repository.dart';
 
 @Injectable(as: RelationshipRepository)
 class RelationshipRepositoryImpl implements RelationshipRepository {

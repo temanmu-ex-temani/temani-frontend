@@ -1,4 +1,4 @@
-import 'package:temani_frontend/features/todo/domain/entities/todo_list.dart';
+import 'package:temanmu/features/todo/domain/entities/todo_list.dart';
 
 class TodoItemModel extends TodoItem {
   TodoItemModel({

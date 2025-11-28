@@ -1,4 +1,4 @@
-import 'package:temani_frontend/features/mood/domain/entities/mood_log.dart';
+import 'package:temanmu/features/mood/domain/entities/mood_log.dart';
 
 class MoodLogModel extends MoodLog {
   MoodLogModel({

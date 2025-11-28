@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/services/router_service.dart';
+import 'package:temanmu/services/router_service.dart';
 
 class PaymentHeader extends StatelessWidget {
   const PaymentHeader({super.key});

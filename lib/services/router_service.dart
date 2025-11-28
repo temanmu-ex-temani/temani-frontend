@@ -1,19 +1,19 @@
 import 'package:go_router/go_router.dart';
-import 'package:temani_frontend/app.dart';
-import 'package:temani_frontend/features/authentication/presentation/pages/login_page.dart';
-import 'package:temani_frontend/features/counseling/presentation/pages/book_consultation_page.dart';
-import 'package:temani_frontend/features/counseling/presentation/pages/create_schedule_page.dart';
-import 'package:temani_frontend/features/counseling/presentation/pages/chat_page.dart'
+import 'package:temanmu/app.dart';
+import 'package:temanmu/features/authentication/presentation/pages/login_page.dart';
+import 'package:temanmu/features/counseling/presentation/pages/book_consultation_page.dart';
+import 'package:temanmu/features/counseling/presentation/pages/create_schedule_page.dart';
+import 'package:temanmu/features/counseling/presentation/pages/chat_page.dart'
     as counseling_chat;
-import 'package:temani_frontend/features/counseling/presentation/pages/chat_history_page.dart'
+import 'package:temanmu/features/counseling/presentation/pages/chat_history_page.dart'
     as counseling_chat_history;
-import 'package:temani_frontend/features/counseling/presentation/pages/counseling_page.dart';
-import 'package:temani_frontend/features/counseling/presentation/pages/payment_page.dart';
-import 'package:temani_frontend/features/journal/presentation/pages/create_journal_page.dart';
-import 'package:temani_frontend/features/journal/presentation/pages/journal_page.dart';
-import 'package:temani_frontend/features/todo/presentation/pages/create_todo_page.dart';
-import 'package:temani_frontend/features/todo/presentation/pages/todo_page.dart';
-import 'package:temani_frontend/features/relationship/presentation/pages/relationship_page.dart';
+import 'package:temanmu/features/counseling/presentation/pages/counseling_page.dart';
+import 'package:temanmu/features/counseling/presentation/pages/payment_page.dart';
+import 'package:temanmu/features/journal/presentation/pages/create_journal_page.dart';
+import 'package:temanmu/features/journal/presentation/pages/journal_page.dart';
+import 'package:temanmu/features/todo/presentation/pages/create_todo_page.dart';
+import 'package:temanmu/features/todo/presentation/pages/todo_page.dart';
+import 'package:temanmu/features/relationship/presentation/pages/relationship_page.dart';
 
 GoRouter router = GoRouter(
   routes: [

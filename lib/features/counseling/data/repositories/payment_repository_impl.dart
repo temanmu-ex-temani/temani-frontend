@@ -1,11 +1,11 @@
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/counseling/data/datasources/payment_remote_datasource.dart';
-import 'package:temani_frontend/features/counseling/data/models/payment_model.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/payment.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/payment_request.dart';
-import 'package:temani_frontend/features/counseling/domain/repositories/payment_repository.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/counseling/data/datasources/payment_remote_datasource.dart';
+import 'package:temanmu/features/counseling/data/models/payment_model.dart';
+import 'package:temanmu/features/counseling/domain/entities/payment.dart';
+import 'package:temanmu/features/counseling/domain/entities/payment_request.dart';
+import 'package:temanmu/features/counseling/domain/repositories/payment_repository.dart';
 
 @Injectable(as: PaymentRepository)
 class PaymentRepositoryImpl implements PaymentRepository {

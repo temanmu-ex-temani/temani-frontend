@@ -1,9 +1,9 @@
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/activity/data/datasources/activity_remote_datasource.dart';
-import 'package:temani_frontend/features/activity/domain/entities/activity.dart';
-import 'package:temani_frontend/features/activity/domain/repositories/activity_repository.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/activity/data/datasources/activity_remote_datasource.dart';
+import 'package:temanmu/features/activity/domain/entities/activity.dart';
+import 'package:temanmu/features/activity/domain/repositories/activity_repository.dart';
 
 @Injectable(as: ActivityRepository)
 class ActivityRepositoryImpl implements ActivityRepository {

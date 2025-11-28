@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/payment.dart';
-import 'package:temani_frontend/services/toast_service.dart';
-import 'package:temani_frontend/services/router_service.dart';
+import 'package:temanmu/features/counseling/domain/entities/payment.dart';
+import 'package:temanmu/services/toast_service.dart';
+import 'package:temanmu/services/router_service.dart';
 
 class MidtransWebViewPage extends StatefulWidget {
   final Payment payment;

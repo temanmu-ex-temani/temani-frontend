@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/payment.dart';
-import 'package:temani_frontend/features/counseling/domain/repositories/payment_repository.dart';
+import 'package:temanmu/features/counseling/domain/entities/payment.dart';
+import 'package:temanmu/features/counseling/domain/repositories/payment_repository.dart';
 import 'package:get_it/get_it.dart';
 
 class PaymentProcessingDialog extends StatefulWidget {

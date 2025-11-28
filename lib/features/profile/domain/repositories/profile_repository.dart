@@ -1,6 +1,6 @@
 import 'package:either_dart/either.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/profile/domain/entities/profile.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/profile/domain/entities/profile.dart';
 
 abstract class ProfileRepository {
   Future<Either<Failure, Profile>> getProfile();

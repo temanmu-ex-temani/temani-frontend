@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/journal/domain/entities/journal.dart';
-import 'package:temani_frontend/features/journal/presentation/cubit/journal_cubit.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/journal/domain/entities/journal.dart';
+import 'package:temanmu/features/journal/presentation/cubit/journal_cubit.dart';
 import 'journal_card.dart';
 
 class JournalList extends StatelessWidget {

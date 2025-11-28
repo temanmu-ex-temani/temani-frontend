@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
+import 'package:temanmu/core/themes/_themes.dart';
 
 class CreateTodoTitleInput extends StatelessWidget {
   const CreateTodoTitleInput({super.key});

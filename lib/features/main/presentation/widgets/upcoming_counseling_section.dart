@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/main/presentation/cubit/upcoming_sessions_cubit.dart';
-import 'package:temani_frontend/features/main/presentation/widgets/counseling_session_list.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/main/presentation/cubit/upcoming_sessions_cubit.dart';
+import 'package:temanmu/features/main/presentation/widgets/counseling_session_list.dart';
+import 'package:temanmu/services/depedencies/di.dart';
 
 class UpcomingCounselingSection extends StatefulWidget {
   const UpcomingCounselingSection({super.key});

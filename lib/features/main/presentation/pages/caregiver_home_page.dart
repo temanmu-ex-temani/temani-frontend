@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/activity/domain/entities/activity.dart';
-import 'package:temani_frontend/features/activity/presentation/cubit/activity_cubit.dart';
-import 'package:temani_frontend/features/activity/presentation/widgets/activity_filter_buttons.dart';
-import 'package:temani_frontend/features/main/presentation/widgets/caregiver_mood_summary.dart';
-import 'package:temani_frontend/features/relationship/domain/entities/relationship.dart';
-import 'package:temani_frontend/features/relationship/presentation/cubit/relationship_cubit.dart';
-import 'package:temani_frontend/features/mood/presentation/cubit/mood_cubit.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
-import 'package:temani_frontend/services/shared_preference_service.dart';
-import 'package:temani_frontend/core/constants/_constants.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/activity/domain/entities/activity.dart';
+import 'package:temanmu/features/activity/presentation/cubit/activity_cubit.dart';
+import 'package:temanmu/features/activity/presentation/widgets/activity_filter_buttons.dart';
+import 'package:temanmu/features/main/presentation/widgets/caregiver_mood_summary.dart';
+import 'package:temanmu/features/relationship/domain/entities/relationship.dart';
+import 'package:temanmu/features/relationship/presentation/cubit/relationship_cubit.dart';
+import 'package:temanmu/features/mood/presentation/cubit/mood_cubit.dart';
+import 'package:temanmu/services/depedencies/di.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
+import 'package:temanmu/core/constants/_constants.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class CaregiverHomePage extends StatefulWidget {

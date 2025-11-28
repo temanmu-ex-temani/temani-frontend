@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
+import 'package:temanmu/core/themes/_themes.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temani_frontend/services/router_service.dart';
+import 'package:temanmu/services/router_service.dart';
 
 class NavigationSection extends StatelessWidget {
   const NavigationSection({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
+import 'package:temanmu/core/themes/_themes.dart';
 
 class MoodSummaryChart extends StatelessWidget {
   final List<int> moodSummary; // 1-5 scale for each day

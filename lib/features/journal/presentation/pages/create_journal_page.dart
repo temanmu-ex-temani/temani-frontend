@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/journal/presentation/cubit/journal_cubit.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
+import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/journal/presentation/cubit/journal_cubit.dart';
+import 'package:temanmu/services/depedencies/di.dart';
 import '../widgets/create_journal_title_input.dart';
 import '../widgets/create_journal_content_input.dart';
-import 'package:temani_frontend/services/toast_service.dart';
+import 'package:temanmu/services/toast_service.dart';
 
 class CreateJournalPage extends StatefulWidget {
   const CreateJournalPage({super.key});

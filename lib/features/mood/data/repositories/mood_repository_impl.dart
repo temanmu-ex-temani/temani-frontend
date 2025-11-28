@@ -1,10 +1,10 @@
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/mood/data/datasources/mood_remote_datasource.dart';
-import 'package:temani_frontend/features/mood/domain/entities/mood_log.dart';
-import 'package:temani_frontend/features/mood/domain/entities/mood_summary.dart';
-import 'package:temani_frontend/features/mood/domain/repositories/mood_repository.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/mood/data/datasources/mood_remote_datasource.dart';
+import 'package:temanmu/features/mood/domain/entities/mood_log.dart';
+import 'package:temanmu/features/mood/domain/entities/mood_summary.dart';
+import 'package:temanmu/features/mood/domain/repositories/mood_repository.dart';
 
 @Injectable(as: MoodRepository)
 class MoodRepositoryImpl implements MoodRepository {

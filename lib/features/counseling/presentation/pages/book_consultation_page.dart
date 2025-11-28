@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/counseling/presentation/cubit/book_consultation_cubit.dart';
-import 'package:temani_frontend/features/counseling/presentation/cubit/book_consultation_state.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/book_consultation_header.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/date_range_filter.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/schedule_list.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/book_next_button.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
-import 'package:temani_frontend/services/router_service.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/counseling/presentation/cubit/book_consultation_cubit.dart';
+import 'package:temanmu/features/counseling/presentation/cubit/book_consultation_state.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/book_consultation_header.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/date_range_filter.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/schedule_list.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/book_next_button.dart';
+import 'package:temanmu/services/depedencies/di.dart';
+import 'package:temanmu/services/router_service.dart';
 
 class BookConsultationPage extends StatelessWidget {
   const BookConsultationPage({super.key});

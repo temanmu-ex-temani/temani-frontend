@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/journal/domain/entities/journal.dart';
-import 'package:temani_frontend/features/journal/presentation/cubit/journal_cubit.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/journal/domain/entities/journal.dart';
+import 'package:temanmu/features/journal/presentation/cubit/journal_cubit.dart';
+import 'package:temanmu/services/depedencies/di.dart';
 import 'create_journal_page.dart';
 import 'journal_detail_page.dart';
 import '../widgets/journal_header.dart';

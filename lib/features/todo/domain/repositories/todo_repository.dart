@@ -1,6 +1,6 @@
 import 'package:either_dart/either.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/todo/domain/entities/todo_list.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/todo/domain/entities/todo_list.dart';
 
 abstract class TodoRepository {
   Future<Either<Failure, List<TodoList>>> getTodoLists();

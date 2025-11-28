@@ -1,6 +1,6 @@
 import 'package:either_dart/either.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/activity/domain/entities/activity.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/activity/domain/entities/activity.dart';
 
 abstract class ActivityRepository {
   Future<Either<Failure, List<Activity>>> getAllActivities();

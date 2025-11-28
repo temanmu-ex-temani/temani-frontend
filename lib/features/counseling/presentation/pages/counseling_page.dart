@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/counseling/presentation/cubit/counseling_sessions_cubit.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/counseling_header.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/counseling_tab_bar.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/counseling_session_list.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
-import 'package:temani_frontend/services/toast_service.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/counseling/presentation/cubit/counseling_sessions_cubit.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/counseling_header.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/counseling_tab_bar.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/counseling_session_list.dart';
+import 'package:temanmu/services/depedencies/di.dart';
+import 'package:temanmu/services/toast_service.dart';
 
 class CounselingPage extends StatefulWidget {
   const CounselingPage({super.key});

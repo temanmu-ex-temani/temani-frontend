@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/features/journal/domain/entities/journal.dart';
-import 'package:temani_frontend/features/journal/domain/repositories/journal_repository.dart';
+import 'package:temanmu/features/journal/domain/entities/journal.dart';
+import 'package:temanmu/features/journal/domain/repositories/journal_repository.dart';
 
 @injectable
 class JournalCubit extends Cubit<JournalState> {

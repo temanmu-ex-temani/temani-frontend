@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
+import 'package:temanmu/core/themes/_themes.dart';
 
 class BookDateSelector extends StatelessWidget {
   final List<Map<String, dynamic>> dates;

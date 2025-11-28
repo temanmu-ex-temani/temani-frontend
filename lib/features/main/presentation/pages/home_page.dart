@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:temani_frontend/core/constants/_constants.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/main/presentation/widgets/affirmation_card.dart';
-import 'package:temani_frontend/features/main/presentation/widgets/home_header.dart';
-import 'package:temani_frontend/features/mood/presentation/widgets/mood_section_real.dart';
-import 'package:temani_frontend/features/mood/presentation/cubit/mood_cubit.dart';
-import 'package:temani_frontend/features/main/presentation/widgets/navigation_section.dart';
-import 'package:temani_frontend/features/main/presentation/widgets/upcoming_counseling_section.dart';
-import 'package:temani_frontend/features/main/presentation/widgets/emergency_call_section.dart';
-import 'package:temani_frontend/features/main/presentation/widgets/home_todo_section.dart';
-import 'package:temani_frontend/features/todo/presentation/cubit/todo_cubit.dart';
-import 'package:temani_frontend/features/main/presentation/cubit/upcoming_sessions_cubit.dart';
-import 'package:temani_frontend/services/shared_preference_service.dart';
+import 'package:temanmu/core/constants/_constants.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/main/presentation/widgets/affirmation_card.dart';
+import 'package:temanmu/features/main/presentation/widgets/home_header.dart';
+import 'package:temanmu/features/mood/presentation/widgets/mood_section_real.dart';
+import 'package:temanmu/features/mood/presentation/cubit/mood_cubit.dart';
+import 'package:temanmu/features/main/presentation/widgets/navigation_section.dart';
+import 'package:temanmu/features/main/presentation/widgets/upcoming_counseling_section.dart';
+import 'package:temanmu/features/main/presentation/widgets/emergency_call_section.dart';
+import 'package:temanmu/features/main/presentation/widgets/home_todo_section.dart';
+import 'package:temanmu/features/todo/presentation/cubit/todo_cubit.dart';
+import 'package:temanmu/features/main/presentation/cubit/upcoming_sessions_cubit.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
 import 'package:get_it/get_it.dart';
 
 class HomePage extends StatefulWidget {

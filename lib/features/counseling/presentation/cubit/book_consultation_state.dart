@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/counseling_schedule.dart';
+import 'package:temanmu/features/counseling/domain/entities/counseling_schedule.dart';
 
 abstract class BookConsultationState extends Equatable {
   const BookConsultationState();

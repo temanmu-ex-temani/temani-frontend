@@ -1,4 +1,4 @@
-import 'package:temani_frontend/features/activity/domain/entities/activity.dart';
+import 'package:temanmu/features/activity/domain/entities/activity.dart';
 
 class ActivityModel extends Activity {
   ActivityModel({

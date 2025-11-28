@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
+import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/themes/_themes.dart';
 
 class JournalHeader extends StatelessWidget {
   final VoidCallback? onCreateJournal;

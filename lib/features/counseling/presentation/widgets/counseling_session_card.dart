@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
-import 'package:temani_frontend/core/constants/_constants.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/counseling/presentation/cubit/counseling_sessions_cubit.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/counseling_details_bottom_sheet.dart';
-import 'package:temani_frontend/services/router_service.dart';
-import 'package:temani_frontend/services/shared_preference_service.dart';
-import 'package:temani_frontend/services/toast_service.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
+import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/constants/_constants.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/counseling/presentation/cubit/counseling_sessions_cubit.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/counseling_details_bottom_sheet.dart';
+import 'package:temanmu/services/router_service.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
+import 'package:temanmu/services/toast_service.dart';
+import 'package:temanmu/services/depedencies/di.dart';
 
 class CounselingSessionCard extends StatelessWidget {
   final String id;

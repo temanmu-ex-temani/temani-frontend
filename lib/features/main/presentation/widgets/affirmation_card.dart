@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/main/data/services/affirmation_service.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/main/data/services/affirmation_service.dart';
 
 class AffirmationCard extends StatelessWidget {
   const AffirmationCard({super.key});

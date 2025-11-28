@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/features/todo/domain/entities/todo_list.dart';
-import 'package:temani_frontend/features/todo/domain/repositories/todo_repository.dart';
+import 'package:temanmu/features/todo/domain/entities/todo_list.dart';
+import 'package:temanmu/features/todo/domain/repositories/todo_repository.dart';
 
 part 'todo_state.dart';
 

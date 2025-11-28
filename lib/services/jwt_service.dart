@@ -1,5 +1,5 @@
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:temani_frontend/services/shared_preference_service.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
 
 import '../core/constants/_constants.dart';
 

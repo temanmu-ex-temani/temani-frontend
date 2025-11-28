@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/client/_client.dart';
-import 'package:temani_frontend/core/environments/_environments.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/todo/data/models/todo_list_model.dart';
+import 'package:temanmu/core/client/_client.dart';
+import 'package:temanmu/core/environments/_environments.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/todo/data/models/todo_list_model.dart';
 
 abstract class TodoRemoteDataSource {
   Future<Either<Failure, TodoListArrayResponse>> getTodoLists();

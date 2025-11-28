@@ -1,10 +1,10 @@
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/journal/data/datasources/journal_remote_datasource.dart';
-import 'package:temani_frontend/features/journal/data/models/journal_model.dart';
-import 'package:temani_frontend/features/journal/domain/entities/journal.dart';
-import 'package:temani_frontend/features/journal/domain/repositories/journal_repository.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/journal/data/datasources/journal_remote_datasource.dart';
+import 'package:temanmu/features/journal/data/models/journal_model.dart';
+import 'package:temanmu/features/journal/domain/entities/journal.dart';
+import 'package:temanmu/features/journal/domain/repositories/journal_repository.dart';
 
 @Injectable(as: JournalRepository)
 class JournalRepositoryImpl implements JournalRepository {

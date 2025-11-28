@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/features/profile/domain/entities/profile.dart';
-import 'package:temani_frontend/features/profile/domain/repositories/profile_repository.dart';
+import 'package:temanmu/features/profile/domain/entities/profile.dart';
+import 'package:temanmu/features/profile/domain/repositories/profile_repository.dart';
 
 part 'profile_state.dart';
 

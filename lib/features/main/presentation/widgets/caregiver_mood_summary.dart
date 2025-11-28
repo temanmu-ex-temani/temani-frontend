@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/mood/presentation/cubit/mood_cubit.dart';
-import 'package:temani_frontend/features/activity/presentation/widgets/mood_summary_chart.dart';
-import 'package:temani_frontend/features/activity/presentation/widgets/mood_average_card.dart';
-import 'package:temani_frontend/features/activity/presentation/widgets/mood_best_card.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/mood/presentation/cubit/mood_cubit.dart';
+import 'package:temanmu/features/activity/presentation/widgets/mood_summary_chart.dart';
+import 'package:temanmu/features/activity/presentation/widgets/mood_average_card.dart';
+import 'package:temanmu/features/activity/presentation/widgets/mood_best_card.dart';
 
 class CaregiverMoodSummary extends StatelessWidget {
   final String userId;

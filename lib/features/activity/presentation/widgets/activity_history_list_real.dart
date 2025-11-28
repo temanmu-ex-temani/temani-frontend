@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/activity/domain/entities/activity.dart';
-import 'package:temani_frontend/features/activity/presentation/cubit/activity_cubit.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/activity/domain/entities/activity.dart';
+import 'package:temanmu/features/activity/presentation/cubit/activity_cubit.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class ActivityHistoryList extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/counseling_schedule.dart';
-import 'package:temani_frontend/features/counseling/presentation/widgets/schedule_card.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/counseling/domain/entities/counseling_schedule.dart';
+import 'package:temanmu/features/counseling/presentation/widgets/schedule_card.dart';
 
 class ScheduleList extends StatelessWidget {
   final List<CounselingSchedule> schedules;

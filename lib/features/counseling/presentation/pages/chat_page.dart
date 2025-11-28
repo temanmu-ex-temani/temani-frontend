@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
-import 'package:temani_frontend/core/constants/_constants.dart';
-import 'package:temani_frontend/services/shared_preference_service.dart';
-import 'package:temani_frontend/features/counseling/presentation/cubit/counseling_sessions_cubit.dart';
-import 'package:temani_frontend/features/main/presentation/cubit/upcoming_sessions_cubit.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
-import 'package:temani_frontend/services/toast_service.dart';
+import 'package:temanmu/core/constants/_constants.dart';
+import 'package:temanmu/services/shared_preference_service.dart';
+import 'package:temanmu/features/counseling/presentation/cubit/counseling_sessions_cubit.dart';
+import 'package:temanmu/features/main/presentation/cubit/upcoming_sessions_cubit.dart';
+import 'package:temanmu/services/depedencies/di.dart';
+import 'package:temanmu/services/toast_service.dart';
 import 'dart:convert';
-import 'package:temani_frontend/core/client/_client.dart';
+import 'package:temanmu/core/client/_client.dart';
 import 'package:intl/intl.dart';
 
 class ChatPage extends StatefulWidget {

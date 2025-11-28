@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/todo/domain/entities/todo_list.dart';
-import 'package:temani_frontend/features/todo/presentation/cubit/todo_cubit.dart';
-import 'package:temani_frontend/services/router_service.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/todo/domain/entities/todo_list.dart';
+import 'package:temanmu/features/todo/presentation/cubit/todo_cubit.dart';
+import 'package:temanmu/services/router_service.dart';
 
 class HomeTodoSection extends StatelessWidget {
   const HomeTodoSection({super.key});

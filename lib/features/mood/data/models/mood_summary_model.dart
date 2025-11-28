@@ -1,4 +1,4 @@
-import 'package:temani_frontend/features/mood/domain/entities/mood_summary.dart';
+import 'package:temanmu/features/mood/domain/entities/mood_summary.dart';
 
 class MoodSummaryModel extends MoodSummary {
   const MoodSummaryModel({

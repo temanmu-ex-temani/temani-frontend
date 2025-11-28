@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/counseling/presentation/cubit/create_schedule_cubit.dart';
-import 'package:temani_frontend/services/depedencies/di.dart';
-import 'package:temani_frontend/services/router_service.dart';
-import 'package:temani_frontend/services/toast_service.dart';
+import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/counseling/presentation/cubit/create_schedule_cubit.dart';
+import 'package:temanmu/services/depedencies/di.dart';
+import 'package:temanmu/services/router_service.dart';
+import 'package:temanmu/services/toast_service.dart';
 
 class CreateSchedulePage extends StatefulWidget {
   const CreateSchedulePage({super.key});

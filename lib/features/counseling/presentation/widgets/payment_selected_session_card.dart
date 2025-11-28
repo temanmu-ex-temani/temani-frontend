@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/counseling/domain/entities/counseling_schedule.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/counseling/domain/entities/counseling_schedule.dart';
 
 class PaymentSelectedSessionCard extends StatelessWidget {
   final CounselingSchedule? schedule;

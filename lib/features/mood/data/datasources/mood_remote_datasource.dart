@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/client/_client.dart';
-import 'package:temani_frontend/core/environments/_environments.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/mood/data/models/mood_log_model.dart';
-import 'package:temani_frontend/features/mood/data/models/mood_summary_model.dart';
+import 'package:temanmu/core/client/_client.dart';
+import 'package:temanmu/core/environments/_environments.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/mood/data/models/mood_log_model.dart';
+import 'package:temanmu/features/mood/data/models/mood_summary_model.dart';
 
 abstract class MoodRemoteDataSource {
   Future<Either<Failure, MoodLogListResponse>> getAllMoodLogs();

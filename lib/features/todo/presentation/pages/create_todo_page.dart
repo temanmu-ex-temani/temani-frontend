@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:temani_frontend/core/bases/widgets/temani_button.dart';
-import 'package:temani_frontend/core/themes/_themes.dart';
-import 'package:temani_frontend/features/todo/presentation/cubit/todo_cubit.dart';
+import 'package:temanmu/core/bases/widgets/temani_button.dart';
+import 'package:temanmu/core/themes/_themes.dart';
+import 'package:temanmu/features/todo/presentation/cubit/todo_cubit.dart';
 
 class CreateTodoPage extends StatefulWidget {
   const CreateTodoPage({super.key});

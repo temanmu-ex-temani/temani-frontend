@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:temani_frontend/core/client/_client.dart';
-import 'package:temani_frontend/core/environments/_environments.dart';
-import 'package:temani_frontend/core/errors/failure.dart';
-import 'package:temani_frontend/features/counseling/data/models/counseling_schedule_model.dart';
+import 'package:temanmu/core/client/_client.dart';
+import 'package:temanmu/core/environments/_environments.dart';
+import 'package:temanmu/core/errors/failure.dart';
+import 'package:temanmu/features/counseling/data/models/counseling_schedule_model.dart';
 
 abstract class CounselingScheduleRemoteDataSource {
   Future<Either<Failure, AvailableSchedulesResponse>> getAvailableSchedules();
